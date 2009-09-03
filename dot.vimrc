@@ -1,37 +1,42 @@
 "-------------------------------------------------------------------------------
-" Editing
+" Edit
 "
 set ambiwidth=double
 set backspace=2
 set autoindent
 
 "-------------------------------------------------------------------------------
-" Searching
+" Search
 "
 set ignorecase
 set smartcase
 set wrapscan
-set noincsearch
 
 "-------------------------------------------------------------------------------
-" Highlighting
+" Highlight
 "
 if has("syntax")
 	syntax on
 endif
-set nonumber
 set listchars=tab:\ \ 
 set list
-set tabstop=4
-set shiftwidth=4
-set showcmd
 set showmatch
 set hlsearch
+
+"-------------------------------------------------------------------------------
+" Looks
+"
+set tabstop=4
+set shiftwidth=4
+
+set nonumber
+set showcmd
+set showtabline=2
 set laststatus=2
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 
 "-------------------------------------------------------------------------------
-" Mapping
+" Bracket
 "
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
@@ -43,4 +48,16 @@ vnoremap [ "zdi^V[<C-R>z]<ESC>
 vnoremap ( "zdi^V(<C-R>z)<ESC>
 vnoremap " "zdi^V"<C-R>z^V"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
+
+"-------------------------------------------------------------------------------
+" Date and Time
+"
+
+if exists("*strftime")
+	function! W3CDTF()
+		let dt = strftime("%Y-%m-%dT%T%z")
+		return printf("%s:%s",dt[0:21],dt[22:23])
+	endfunction
+	imap <C-D><C-W> <C-R>=W3CDTF()<CR>
+endif
 
