@@ -1,3 +1,4 @@
+
 "-------------------------------------------------------------------------------
 " Edit
 "
@@ -33,7 +34,13 @@ set nonumber
 set showcmd
 set showtabline=2
 set laststatus=2
-set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+
+let &statusline = ''
+let &statusline .= '%<%f %h%m%r%w'
+let &statusline .= '[%{&l:fileencoding == "" ? &encoding : &l:fileencoding}]'
+let &statusline .= '%='
+let &statusline .= '(%l,%c)'
+let &statusline .= '  %-14.(%l,%c%V%) %P'
 
 "-------------------------------------------------------------------------------
 " Bracket
@@ -52,7 +59,6 @@ vnoremap ' "zdi'<C-R>z'<ESC>
 "-------------------------------------------------------------------------------
 " Date and Time
 "
-
 if exists("*strftime")
 	function! W3CDTF()
 		let dt = strftime("%Y-%m-%dT%T%z")
