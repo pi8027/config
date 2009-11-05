@@ -39,7 +39,6 @@ let &statusline = ''
 let &statusline .= '%<%f %h%m%r%w'
 let &statusline .= '[%{&l:fileencoding == "" ? &encoding : &l:fileencoding}]'
 let &statusline .= '%='
-let &statusline .= '(%l,%c)'
 let &statusline .= '  %-14.(%l,%c%V%) %P'
 
 "-------------------------------------------------------------------------------

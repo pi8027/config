@@ -1,7 +1,7 @@
 
 # env
 export LANG=ja_JP.UTF-8
-export PATH="$PATH:$HOME/bin/"
+export PATH="$HOME/bin/:$PATH"
 
 # prompt
 
@@ -27,13 +27,14 @@ autoload -U compinit
 compinit
 zstyle ':completion:*' list-colors ''
 
-# ls
+# alias
 
 alias ls="ls --color=auto"
+alias less="less -F -R"
 
 # with GNU screen
 
-if [ $TERM = "screen" ]; then
+if [ $TERM[1,6] = "screen" ]; then
 	preexec(){
 		echo -ne "\ek`pwd | sed -e 's/^\/home\/pi8027/~/g'`% $1\e\\"
 	}

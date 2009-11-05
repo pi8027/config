@@ -1,0 +1,6 @@
+[core]
+	pager = less
+	editor = vim
+[user]
+	name = kazuhiko Sakaguchi
+	email = pi8027@gmail.com
