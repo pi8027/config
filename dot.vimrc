@@ -5,6 +5,10 @@
 set ambiwidth=double
 set backspace=2
 set autoindent
+set nocompatible
+set history=100
+
+set fileencodings=utf-8,euc-jp,iso-2022-jp,shift_jis
 
 "-------------------------------------------------------------------------------
 " Search
@@ -12,6 +16,7 @@ set autoindent
 set ignorecase
 set smartcase
 set wrapscan
+set incsearch
 
 "-------------------------------------------------------------------------------
 " Highlight
@@ -42,7 +47,7 @@ let &statusline .= '%='
 let &statusline .= '  %-14.(%l,%c%V%) %P'
 
 "-------------------------------------------------------------------------------
-" Bracket
+" Auto Close Bracket
 "
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
@@ -54,6 +59,13 @@ vnoremap [ "zdi^V[<C-R>z]<ESC>
 vnoremap ( "zdi^V(<C-R>z)<ESC>
 vnoremap " "zdi^V"<C-R>z^V"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
+
+"-------------------------------------------------------------------------------
+" Swap and Backup Files
+"
+set swapfile
+set directory=~/.vim/tmp
+set nobackup
 
 "-------------------------------------------------------------------------------
 " Date and Time
