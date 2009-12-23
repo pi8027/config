@@ -3,7 +3,7 @@
 defencoding UTF-8
 
 # status line
-hardstatus alwayslastline "[%02c] %`%-w%{=b bw}%n %t%{-}%+w"
+hardstatus alwayslastline "[%02c:%s] %`%-w%{=b bw}%n %t%{-}%+w"
 
 # startup message
 startup_message off

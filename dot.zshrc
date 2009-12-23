@@ -1,13 +1,18 @@
 
 # env
 export LANG=ja_JP.UTF-8
-export PATH="$HOME/bin/:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 # prompt
 
-PROMPT="%/%% "
-PROMPT2="%_%% "
-SPROMPT="%r is correct? [n,y,a,e]: "
+autoload colors
+colors
+
+PROMPT="%{${fg[red]}%}${USER}@${HOST} : %/%%%{${reset_color}%} "
+PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
+SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+    PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
 
 # history
 
@@ -30,7 +35,9 @@ zstyle ':completion:*' list-colors ''
 # alias
 
 alias ls="ls --color=auto"
-alias less="less -F -R"
+alias less="less --quit-if-one-screen --RAW-CONTROL-CHARS"
+alias gosh="rlwrap -break-chars '(){}[],#\";| ' -f $HOME/.rlwrap/gosh_completions gosh"
+alias emacs="emacs --no-window-system"
 
 # with GNU screen
 
