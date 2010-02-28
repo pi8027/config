@@ -41,15 +41,12 @@ alias emacs="emacs --no-window-system"
 alias gosh="rlwrap gosh"
 alias maxima="rlwrap maxima"
 alias hoogle="hoogle --color=true"
-alias starttig="daemondo --start-cmd mono ~/tig/TwitterIrcGatewayCLI.exe --encoding=utf-8"
-alias stoptig="daemondo --stop-cmd mono ~/tig/TwitterIrcGatewayCLI.exe --encoding=utf-8"
+alias starttig="mono ~/tig/TwitterIrcGatewayCLI.exe --encoding=utf-8"
+alias stoptig="mono ~/tig/TwitterIrcGatewayCLI.exe --encoding=utf-8"
 
 # with uim-fep, screen
 
-if [ -z $UIM_FEP_PID ]; then
-	uim-fep
-	exit
-elif [ -z $STY ]; then
+if [ -z $STY ]; then
 	screen -R
 else
 	preexec(){
