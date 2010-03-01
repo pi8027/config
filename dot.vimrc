@@ -82,3 +82,6 @@ if exists("*strftime")
 	imap <C-D><C-W> <C-R>=W3CDTF()<CR>
 endif
 
+"""" Private Settings
+
+source ~/.vimrc.private
