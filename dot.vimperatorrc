@@ -1,0 +1,15 @@
+
+set titlestring=vimperator
+set guioptions=mT
+set hlsearch
+set visualbell
+set wildoptions=auto
+set complete=sl 
+
+" Key mapping
+
+map y :echo 'Yank!'<CR>Y
+
+autocmd LocationChange .* :fmapc
+autocmd LocationChange fastladder\\.com/reader :fmap j k s a p o v c <Space> <S-Space>
+

@@ -3,4 +3,6 @@
 .skk
 .vim
 .vimrc
+.vimperator
+.vimperatorrc
 .zshrc
