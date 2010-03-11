@@ -5,6 +5,7 @@ module Main where
 import Data.Functor
 import Control.Monad
 import Control.Arrow
+import System.FilePath
 import System.Directory
 import System.Environment
 
@@ -15,7 +16,7 @@ getFileList :: FilePath -> IO [(String,String)]
 getFileList fileName = do
     current <- getCurrentDirectory
     home <- getHomeDirectory
-    map (((current++"/"++reposPrefix)++)&&&((home++"/")++)) <$> lines <$> readFile fileName
+    map (((current</>reposPrefix)++)&&&(home</>)) <$> lines <$> readFile fileName
 
 copyFileOrDirectory :: FilePath -> FilePath -> IO ()
 copyFileOrDirectory src dest = do
@@ -26,7 +27,7 @@ copyFileOrDirectory src dest = do
     when isDirectory $ do
         destExist <- doesDirectoryExist dest
         unless destExist $ createDirectory dest
-        map (\n -> (copyFileOrDirectory (src++"/"++n) (dest++"/"++n))) <$>
+        map (\n -> (copyFileOrDirectory (src</>n) (dest</>n))) <$>
             filter (not.flip elem [".",".."]) <$> getDirectoryContents src >>= sequence_
 
 main :: IO ()
@@ -34,7 +35,7 @@ main = do
     args <- getArgs
     files <- getFileList fileList
     case () of
-        _ | elem "export" args -> sequence_ $ map (uncurry copyFileOrDirectory) files
-          | elem "import" args -> sequence_ $ map (uncurry (flip copyFileOrDirectory)) files
+        _ | elem "export" args -> mapM_ (uncurry copyFileOrDirectory) files
+          | elem "import" args -> mapM_ (uncurry (flip copyFileOrDirectory)) files
           | otherwise -> return ()
 
