@@ -38,6 +38,8 @@ set showcmd
 set showtabline=2
 set laststatus=2
 
+set ambiwidth=double
+
 colorscheme evening
 
 let &statusline = ' '
@@ -47,9 +49,6 @@ let &statusline .= '%='
 let &statusline .= '  %-14.(%l,%c%V%) %P '
 
 """" Autocomplete
-
-cnoreabbrev ~/ <Bslash>
-cnoremap <Bslash> ~/
 
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
@@ -85,3 +84,4 @@ endif
 """" Private Settings
 
 source ~/.vimrc.private
+
