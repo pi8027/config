@@ -40,9 +40,10 @@ alias less="less --quit-if-one-screen --raw-control-chars"
 alias emacs="emacs --no-window-system"
 alias gosh="rlwrap gosh"
 alias maxima="rlwrap maxima"
+alias coqtop="rlwrap coqtop"
 alias hoogle="hoogle --color=true"
-alias starttig="mono ~/tig/TwitterIrcGatewayCLI.exe --encoding=utf-8"
-alias stoptig="mono ~/tig/TwitterIrcGatewayCLI.exe --encoding=utf-8"
+alias starttig="mono ~/tig/Bin/TwitterIrcGatewayCLI.exe --encoding=utf-8"
+alias stoptig="mono ~/tig/Bin/TwitterIrcGatewayCLI.exe --encoding=utf-8"
 
 # with uim-fep, screen
 

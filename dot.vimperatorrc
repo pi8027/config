@@ -11,3 +11,4 @@ set complete=sl
 autocmd LocationChange .* :fmapc
 autocmd LocationChange fastladder\\.com/reader :fmap j k s a p o v c <Space> <S-Space>
 
+nnoremap <silent> y :js util.copyToClipboard(buffer.URL)<CR>:echo 'Yank'<CR>
