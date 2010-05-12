@@ -44,6 +44,7 @@ alias coqtop="rlwrap coqtop"
 alias hoogle="hoogle --color=true"
 alias starttig="mono ~/tig/Bin/TwitterIrcGatewayCLI.exe --encoding=utf-8"
 alias stoptig="mono ~/tig/Bin/TwitterIrcGatewayCLI.exe --encoding=utf-8"
+alias google="w3m http://google.com/"
 
 # with uim-fep, screen
 
