@@ -33,7 +33,7 @@ set shiftwidth=4
 set softtabstop=4
 set noexpandtab
 
-set nonumber
+set number
 set showcmd
 set showtabline=2
 set laststatus=2
@@ -48,18 +48,20 @@ let &statusline .= '[%{&l:fileencoding == "" ? &encoding : &l:fileencoding}]'
 let &statusline .= '%='
 let &statusline .= '  %-14.(%l,%c%V%) %P '
 
-"""" Autocomplete
+"""" Key Mapping
 
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
 inoremap ( ()<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
+"inoremap " ""<LEFT>
+"inoremap ' ''<LEFT>
 vnoremap { "zdi^V{<C-R>z}<ESC>
 vnoremap [ "zdi^V[<C-R>z]<ESC>
 vnoremap ( "zdi^V(<C-R>z)<ESC>
-vnoremap " "zdi^V"<C-R>z^V"<ESC>
-vnoremap ' "zdi'<C-R>z'<ESC>
+"noremap " "zdi^V"<C-R>z^V"<ESC>
+"noremap ' "zdi'<C-R>z'<ESC>
+
+inoremap <C-C> <NOP>
 
 """" Swap and Backup Files
 
@@ -70,6 +72,8 @@ set nobackup
 """" Settings for each file types
 
 autocmd FileType haskell setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
+
+au BufNewFile,BufRead  *.agda setf agda
 
 """" Date and Time
 
