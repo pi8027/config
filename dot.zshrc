@@ -1,8 +1,5 @@
 
-# env
-
-LANG=ja_JP.UTF-8
-export LS_COLORS="no=00:fi=00:di=04;34:ln=01;36:pi=40;33:so=40;33:bd=40;33:cd=40;33:ex=01;31:or=04;36"
+source ~/.zshrc.local
 
 # prompt
 
@@ -43,11 +40,9 @@ alias maxima="rlwrap maxima"
 alias coqtop="rlwrap coqtop"
 alias ghc="ghc --make"
 alias hoogle="hoogle --color=true"
-alias starttig="mono ~/tig/Bin/TwitterIrcGatewayCLI.exe --encoding=utf-8"
-alias stoptig="mono ~/tig/Bin/TwitterIrcGatewayCLI.exe --encoding=utf-8"
 alias google="w3m http://google.com/"
 
-# with uim-fep, screen
+# screen
 
 if [ -z $STY ]; then
 	screen -R

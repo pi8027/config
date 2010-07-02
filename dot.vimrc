@@ -71,9 +71,10 @@ set nobackup
 
 """" Settings for each file types
 
-autocmd FileType haskell setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
-
 au BufNewFile,BufRead  *.agda setf agda
+
+autocmd FileType haskell setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType agda setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
 
 """" Date and Time
 
