@@ -38,17 +38,25 @@ alias emacs="emacs --no-window-system"
 alias gosh="rlwrap gosh"
 alias maxima="rlwrap maxima"
 alias coqtop="rlwrap coqtop"
+alias gs="rlwrap gs"
 alias ghc="ghc --make"
 alias hoogle="hoogle --color=true"
 alias google="w3m http://google.com/"
 
 # screen
 
-if [ -z $STY ]; then
-	screen -R
-else
-	preexec(){
-		echo -ne "\ek`pwd | sed -e "s/^\/Users\/pi8027/~/g"`% $1\e\\"
-	}
+#if [ -z $STY ]; then
+#	screen -R
+#else
+#	preexec(){
+#		echo -ne "\ek`pwd | sed -e "s/^\/Users\/pi8027/~/g"`% $1\e\\"
+#	}
+#fi
+
+# tmux
+
+if [ -z $TMUX ]; then
+	tmux
 fi
+
 

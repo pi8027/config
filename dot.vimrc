@@ -75,6 +75,7 @@ au BufNewFile,BufRead  *.agda setf agda
 
 autocmd FileType haskell setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType agda setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
+"autocmd vimrc BufNewFile,BufRead SKK-JISYO* setf skk
 
 """" Date and Time
 
