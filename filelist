@@ -6,6 +6,7 @@
 .vimrc
 .vimperator
 .vimperatorrc
+.emacs.d
 .zshrc
 .zshenv
 .zlogin
