@@ -66,7 +66,7 @@ inoremap <C-C> <NOP>
 """" Swap and Backup Files
 
 set swapfile
-set directory=~/.vim/tmp
+set directory=~/tmp
 set nobackup
 
 """" Settings for each file types
