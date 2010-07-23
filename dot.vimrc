@@ -63,6 +63,8 @@ vnoremap ( "zdi^V(<C-R>z)<ESC>
 
 inoremap <C-C> <NOP>
 
+vnoremap <C-Y> !pbcopy<C-M><C-M>u
+
 """" Swap and Backup Files
 
 set swapfile

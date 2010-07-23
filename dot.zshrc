@@ -42,6 +42,7 @@ alias gs="rlwrap gs"
 alias ghc="ghc --make"
 alias hoogle="hoogle --color=true"
 alias google="w3m http://google.com/"
+alias cabal-install="sudo cabal install --global"
 
 # screen
 
@@ -58,5 +59,4 @@ alias google="w3m http://google.com/"
 if [ -z $TMUX ]; then
 	tmux
 fi
-
 
