@@ -6,12 +6,20 @@ source ~/.zshrc.local
 autoload colors
 colors
 
-PROMPT="%U%{${fg[red]}%}[%n@%M]%{${reset_color}%}%u(%j) %~
+if [ $TERM != "dumb" ]; then
+	PROMPT="%U%{${fg[red]}%}[%n@%M]%{${reset_color}%}%u(%j) %~
 %# "
-PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
-SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
-[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-    PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
+	PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
+	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
+else
+	PROMPT="%U[%n@%M]%u(%j) %~
+%# "
+	PROMPT2="%_%% "
+	SPROMPT="%r is correct? [n,y,a,e]: "
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+		PROMPT="$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
+fi
 
 # history
 
@@ -56,7 +64,9 @@ alias cabal-install="sudo cabal install --global"
 
 # tmux
 
-if [ -z $TMUX ]; then
+if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
 	tmux
+	export WITHOUT_SCREEN=1
 fi
+
 

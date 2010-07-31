@@ -2,7 +2,7 @@
 """" Edit
 
 set ambiwidth=double
-set backspace=2
+set backspace=1
 set autoindent
 set nocompatible
 set history=100
