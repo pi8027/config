@@ -101,7 +101,7 @@ endif
 
 " ▼モードのマーク
 if !exists("skk_marker_black")
-  let skk_marker_black = '##'
+  let skk_marker_black = '$'
 endif
 
 " 送りがな開始位置のマーク
