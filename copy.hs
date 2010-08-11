@@ -5,12 +5,16 @@ module Main where
 import Data.Functor
 import Control.Monad
 import Control.Arrow
+import System.Time
 import System.FilePath
 import System.Directory
 import System.Environment
 
 reposPrefix = "dot"
 fileList = "filelist"
+
+doesExist :: FilePath -> IO Bool
+doesExist path = liftM2 (||) (doesFileExist path) (doesDirectoryExist path)
 
 getFileList :: FilePath -> IO [(String,String)]
 getFileList fileName = do
@@ -20,15 +24,21 @@ getFileList fileName = do
 
 copyFileOrDirectory :: FilePath -> FilePath -> IO ()
 copyFileOrDirectory src dest = do
-    putStrLn $ "copy: "++src++" -> "++dest
-    isFile <- doesFileExist src
-    when isFile $ copyFile src dest
-    isDirectory <- doesDirectoryExist src
-    when isDirectory $ do
-        destExist <- doesDirectoryExist dest
-        unless destExist $ createDirectory dest
-        map (\n -> (copyFileOrDirectory (src</>n) (dest</>n))) <$>
-            filter (not.flip elem [".",".."]) <$> getDirectoryContents src >>= sequence_
+    needToCopy <- do
+        destExist <- doesExist dest
+        if destExist
+            then liftM2 (>) (getModificationTime src) (getModificationTime dest)
+            else return True
+    when needToCopy $ do
+        putStrLn $ "copy: "++src++" -> "++dest
+        isFile <- doesFileExist src
+        when isFile $ copyFile src dest
+        isDirectory <- doesDirectoryExist src
+        when isDirectory $ do
+            destExist <- doesDirectoryExist dest
+            unless destExist $ createDirectory dest
+            map (\n -> (copyFileOrDirectory (src</>n) (dest</>n))) <$>
+                filter (not.flip elem [".",".."]) <$> getDirectoryContents src >>= sequence_
 
 main :: IO ()
 main = do
