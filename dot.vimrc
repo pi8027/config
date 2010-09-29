@@ -31,7 +31,7 @@ set hlsearch
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set noexpandtab
+set expandtab
 
 set number
 set showcmd
@@ -50,14 +50,14 @@ let &statusline .= '  %-14.(%l,%c%V%) %P '
 
 """" Key Mapping
 
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
+"inoremap { {}<LEFT>
+"inoremap [ []<LEFT>
+"inoremap ( ()<LEFT>
 "inoremap " ""<LEFT>
 "inoremap ' ''<LEFT>
-vnoremap { "zdi^V{<C-R>z}<ESC>
-vnoremap [ "zdi^V[<C-R>z]<ESC>
-vnoremap ( "zdi^V(<C-R>z)<ESC>
+"vnoremap { "zdi^V{<C-R>z}<ESC>
+"vnoremap [ "zdi^V[<C-R>z]<ESC>
+"vnoremap ( "zdi^V(<C-R>z)<ESC>
 "noremap " "zdi^V"<C-R>z^V"<ESC>
 "noremap ' "zdi'<C-R>z'<ESC>
 
@@ -77,6 +77,8 @@ au BufNewFile,BufRead  *.agda setf agda
 
 autocmd FileType haskell setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType agda setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType make setlocal noexpandtab
 "autocmd vimrc BufNewFile,BufRead SKK-JISYO* setf skk
 
 """" Date and Time

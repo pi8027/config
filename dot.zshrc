@@ -65,7 +65,7 @@ alias cabal-install="sudo cabal install --global"
 # tmux
 
 if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
-	tmux
+	tmux -u
 	export WITHOUT_SCREEN=1
 fi
 

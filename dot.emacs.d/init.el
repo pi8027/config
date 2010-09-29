@@ -17,11 +17,11 @@
 
 ;; key binding
 
-(if (eq window-system 'x)
-    (progn
-     (define-key function-key-map [backspace] [8])
-     (put 'backspace 'ascii-character 8)
-    ))
+;(if (eq window-system 'x)
+;    (progn
+;     (define-key function-key-map [backspace] [8])
+;     (put 'backspace 'ascii-character 8)
+;    ))
 
 (global-set-key "\C-h" 'backward-delete-char)
 
@@ -34,7 +34,17 @@
 ;; view
 
 (menu-bar-mode nil)
+
 (global-linum-mode t)
+;(setq linum-format "%d ")
+
+(show-paren-mode 1)
+
+(blink-cursor-mode t)
+
+(if window-system
+	(set-scroll-bar-mode nil))
+(setq scroll-step 5)
 
 ;; color
 
@@ -59,6 +69,21 @@
 (color-theme-initialize)
 (color-theme-pi8027)
 
+;; font
+
+(when (eq window-system 'ns)
+	  (set-face-attribute 'default nil :family "Monaco" :height 100)
+	  (set-fontset-font "fontset-default" 'japanese-jisx0208 '("Osaka" . "iso10646-1"))
+	  (set-fontset-font "fontset-default" 'katakana-jisx0201 '("Osaka" . "iso10646-1"))
+	  (setq face-font-rescale-alist
+			'(("^-apple-hiragino.*" . 1.2)
+			  (".*osaka-bold.*" . 1.2)
+			  (".*osaka-medium.*" . 1.2)
+			  (".*courier-bold-.*-mac-roman" . 1.0)
+			  (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
+			  (".*monaco-bold-.*-mac-roman" . 0.9)
+			  ("-cdac$" . 1.3))))
+
 ;; ddskk
 
 (autoload 'skk-mode "skk" nil t)
@@ -77,6 +102,13 @@
               (when (and (featurep 'skk-isearch)
                          skk-isearch-mode-enable)
                 (skk-isearch-mode-cleanup))))
+
+;; yatex
+
+(setq auto-mode-alist (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+
+(setq YaTeX-kanji-code 4)
 
 ;; haskell-mode
 
