@@ -2,6 +2,7 @@
 .ghci
 .screenrc
 .skk
+.tmux.conf
 .vim
 .vimrc
 .vimperator
