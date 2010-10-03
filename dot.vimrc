@@ -40,7 +40,7 @@ set laststatus=2
 
 set ambiwidth=double
 
-colorscheme evening
+colorscheme desert
 
 let &statusline = ' '
 let &statusline .= '%<%f %h%m%r%w'
