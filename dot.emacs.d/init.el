@@ -12,16 +12,18 @@
             (let ((default-directory (car paths))) (normal-top-level-add-subdirs-to-load-path))
             (add-load-paths (cdr paths)))))
 
-(add-load-paths
-    '("~/.emacs.d/site-lisp" "/opt/local/share/emacs/site-lisp" "/opt/local/share/emacs/23.2/site-lisp"))
+;(add-load-paths
+;    '("~/.emacs.d/site-lisp" "/opt/local/share/emacs/site-lisp" "/opt/local/share/emacs/23.2/site-lisp"))
+
+(add-load-paths '("~/.emacs.d/site-lisp" "/usr/share/emacs/site-lisp" "/usr/share/emacs23/site-lisp"))
 
 ;; key binding
 
-;(if (eq window-system 'x)
-;    (progn
-;     (define-key function-key-map [backspace] [8])
-;     (put 'backspace 'ascii-character 8)
-;    ))
+(if (eq window-system 'x)
+    (progn
+     (define-key function-key-map [backspace] [8])
+     (put 'backspace 'ascii-character 8)
+    ))
 
 (global-set-key "\C-h" 'backward-delete-char)
 
@@ -33,7 +35,8 @@
 
 ;; view
 
-(menu-bar-mode nil)
+(menu-bar-mode 0)
+(tool-bar-mode 0)
 
 (global-linum-mode t)
 ;(setq linum-format "%d ")
@@ -84,6 +87,8 @@
 			  (".*monaco-bold-.*-mac-roman" . 0.9)
 			  ("-cdac$" . 1.3))))
 
+
+
 ;; ddskk
 
 (autoload 'skk-mode "skk" nil t)
@@ -112,4 +117,4 @@
 
 ;; haskell-mode
 
-(require 'haskell-site-file)
+(load "haskell-site-file")
