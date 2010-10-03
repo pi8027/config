@@ -12,16 +12,18 @@
             (let ((default-directory (car paths))) (normal-top-level-add-subdirs-to-load-path))
             (add-load-paths (cdr paths)))))
 
-(add-load-paths
-    '("~/.emacs.d/site-lisp" "/opt/local/share/emacs/site-lisp" "/opt/local/share/emacs/23.2/site-lisp"))
+;(add-load-paths
+;    '("~/.emacs.d/site-lisp" "/opt/local/share/emacs/site-lisp" "/opt/local/share/emacs/23.2/site-lisp"))
+
+(add-load-paths '("~/.emacs.d/site-lisp"))
 
 ;; key binding
 
-;(if (eq window-system 'x)
-;    (progn
-;     (define-key function-key-map [backspace] [8])
-;     (put 'backspace 'ascii-character 8)
-;    ))
+(if (eq window-system 'x)
+    (progn
+     (define-key function-key-map [backspace] [8])
+     (put 'backspace 'ascii-character 8)
+    ))
 
 (global-set-key "\C-h" 'backward-delete-char)
 
