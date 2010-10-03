@@ -1,4 +1,4 @@
 
 import XMonad
 
-main = xmonad defaultConfig { modMask = mod4Mask, terminal = "xterm"}
+main = xmonad defaultConfig { modMask = mod4Mask, terminal = "mlterm"}
