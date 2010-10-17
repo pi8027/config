@@ -18,9 +18,7 @@ set incsearch
 
 """" Highlight
 
-if has("syntax")
-	syntax on
-endif
+syntax on
 set listchars=tab:\ \ 
 set list
 set showmatch
@@ -40,7 +38,7 @@ set laststatus=2
 
 set ambiwidth=double
 
-colorscheme desert
+colorscheme wombat
 
 let &statusline = ' '
 let &statusline .= '%<%f %h%m%r%w'
@@ -79,7 +77,8 @@ autocmd FileType haskell setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType agda setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType make setlocal noexpandtab
-"autocmd vimrc BufNewFile,BufRead SKK-JISYO* setf skk
+
+let hs_highlight_debug = 1
 
 """" Date and Time
 
