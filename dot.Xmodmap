@@ -14,3 +14,7 @@ keycode  19 = parenright 0 parenright 0
 ! swap colon for semicolon
 keycode  47 = colon semicolon colon semicolon
 
+! CapsLock to Control
+remove Lock = Caps_Lock
+add Control = Caps_Lock
+keysym Caps_Lock = Control_L
