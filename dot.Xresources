@@ -20,3 +20,6 @@ urxvt*color15: #FFFFFF
 
 urxvt*scrollBar: False
 urxvt*saveLines: 0
+
+urxvt*inputMethod: none
+
