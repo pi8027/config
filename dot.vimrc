@@ -38,7 +38,7 @@ set laststatus=2
 
 set ambiwidth=double
 
-colorscheme wombat
+colorscheme desert
 
 let &statusline = ' '
 let &statusline .= '%<%f %h%m%r%w'

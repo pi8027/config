@@ -1,5 +1,6 @@
 
 import XMonad
+import XMonad.Hooks.ManageDocks
 import Data.Monoid
 import System.Exit
 
@@ -93,7 +94,7 @@ myLayout = tiled ||| Mirror tiled ||| Full
 ------------------------------------------------------------------------
 -- Window rules:
 --
-myManageHook = composeAll
+myManageHook = manageDocks <+> composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore

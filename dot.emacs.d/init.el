@@ -87,8 +87,6 @@
 			  (".*monaco-bold-.*-mac-roman" . 0.9)
 			  ("-cdac$" . 1.3))))
 
-
-
 ;; ddskk
 
 (autoload 'skk-mode "skk" nil t)
@@ -118,3 +116,13 @@
 ;; haskell-mode
 
 (load "haskell-site-file")
+
+;; sdic-mode
+
+(global-set-key "\C-cw" 'sdic-describe-word)
+
+(global-set-key "\C-c\C-w" 'sdic-describe-word-at-point)
+
+(setq sdic-window-height 10
+	  sdic-disable-select-window t)
+

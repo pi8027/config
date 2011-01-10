@@ -18,8 +18,27 @@ urxvt*color13: #FF00FF
 urxvt*color14: #00FFFF
 urxvt*color15: #FFFFFF
 
+!fc-list, xlsfonts 参照
+!urxvt*font: x:6x13,\
+!            xft:IPAGothic:pixelsize=13
+!urxvt*boldFont: x:6x13bold,\
+!                xft: IPAGothic:pixelsize=13
+
+!urxvt*font: x:-adobe-courier-medium-r-normal--12-120-75-75-m-70-iso10646-1, \
+!            xft:IPAGothic:pixelsize=12
+!urxvt*boldFont: x:-adobe-courier-bold-r-normal--12-120-75-75-m-70-iso10646-1, \
+!            xft:IPAGothic:pixelsize=12
+
+urxvt*font: mplus_f12r-iso, terminus-12
+urxvt*boldFont: mplus_f12b-iso, terminus-bold-12
+urxvt*italicFont: mplus_f12r-iso, terminus-12
+urxvt*boldItalicFont: mplus_f12b-iso, terminus-bold-12
+urxvt*lineSpace: 0
+
 urxvt*scrollBar: False
 urxvt*saveLines: 0
 
 urxvt*inputMethod: none
+
+Emacs*useXIM: false
 
