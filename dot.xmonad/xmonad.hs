@@ -12,11 +12,12 @@ import qualified Data.Map        as M
 --
 myKeys conf = M.fromList $ [
     ((smodm, xK_Return), spawn $ XMonad.terminal conf),                           -- launch a terminal
+    ((modm,  xK_d     ), spawn "emacs"),                                          -- launch emacs
     ((modm,  xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\""), -- launch dmenu
     ((smodm, xK_p     ), spawn "gmrun"),                                          -- launch gmrun
     ((smodm, xK_c     ), kill),                                                   -- close focused window
     ((modm,  xK_space ), sendMessage NextLayout),                                 -- Rotate through the available layout algorithms
-    ((smodm, xK_space ), setLayout $ XMonad.layoutHook conf),                     --  Reset the layouts on the current workspace to default
+    ((smodm, xK_space ), setLayout $ XMonad.layoutHook conf),                     -- Reset the layouts on the current workspace to default
     ((modm,  xK_n     ), refresh),                                                -- Resize viewed windows to the correct size
     ((modm,  xK_Tab   ), windows W.focusDown),                                    -- Move focus to the next window
     ((modm,  xK_j     ), windows W.focusDown),                                    -- Move focus to the next window
@@ -86,7 +87,7 @@ myLayout = tiled ||| Mirror tiled ||| Full
      nmaster = 1
 
      -- Default proportion of screen occupied by master pane
-     ratio   = 1/2
+     ratio   = 2/3
 
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100

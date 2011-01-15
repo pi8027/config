@@ -38,6 +38,9 @@ set laststatus=2
 
 set ambiwidth=double
 
+set wildmenu
+set wildmode=longest:full,full
+
 colorscheme desert
 
 let &statusline = ' '
