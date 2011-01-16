@@ -74,18 +74,27 @@
 
 ;; font
 
-(when (eq window-system 'ns)
-	  (set-face-attribute 'default nil :family "Monaco" :height 100)
-	  (set-fontset-font "fontset-default" 'japanese-jisx0208 '("Osaka" . "iso10646-1"))
-	  (set-fontset-font "fontset-default" 'katakana-jisx0201 '("Osaka" . "iso10646-1"))
-	  (setq face-font-rescale-alist
-			'(("^-apple-hiragino.*" . 1.2)
-			  (".*osaka-bold.*" . 1.2)
-			  (".*osaka-medium.*" . 1.2)
-			  (".*courier-bold-.*-mac-roman" . 1.0)
-			  (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
-			  (".*monaco-bold-.*-mac-roman" . 0.9)
-			  ("-cdac$" . 1.3))))
+(cond ((eq window-system 'ns)
+	   (progn
+		 (set-face-attribute 'default nil :family "Monaco" :height 100)
+		 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("Osaka" . "iso10646-1"))
+		 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("Osaka" . "iso10646-1"))
+		 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("Osaka" . "iso10646-1"))
+		 (setq face-font-rescale-alist
+			   '(("^-apple-hiragino.*" . 1.2)
+				 (".*osaka-bold.*" . 1.2)
+				 (".*osaka-medium.*" . 1.2)
+				 (".*courier-bold-.*-mac-roman" . 1.0)
+				 (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
+				 (".*monaco-bold-.*-mac-roman" . 0.9)
+				 ("-cdac$" . 1.3)))))
+	  ((eq window-system 'x)
+	   (progn
+		 (set-face-attribute 'default nil :family "Terminus" :height 80)
+		 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("M+ 2m" . "iso10646-1"))
+		 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("M+ 2m" . "iso10646-1"))
+		 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("M+ 2m" . "iso10646-1")))))
+
 
 ;; ddskk
 
