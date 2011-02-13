@@ -1,10 +1,10 @@
 [core]
-	pager = less
-	editor = vim
+    pager = less
+    editor = vim
 
 [user]
-	name = kazuhiko Sakaguchi
-	email = pi8027@gmail.com
+    name = kazuhiko Sakaguchi
+    email = pi8027@gmail.com
 
 [alias]
     log-graph = log --graph --date=short --pretty=format:'%Cgreen%h %cd %Cblue%cn %Creset%s'

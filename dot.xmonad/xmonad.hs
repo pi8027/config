@@ -1,6 +1,5 @@
 
 import XMonad
-import XMonad.Hooks.ManageDocks
 import Data.Monoid
 import System.Exit
 
@@ -11,28 +10,28 @@ import qualified Data.Map        as M
 -- Key bindings. Add, modify or remove key bindings here.
 --
 myKeys conf = M.fromList $ [
-    ((smodm, xK_Return), spawn $ XMonad.terminal conf),                           -- launch a terminal
-    ((modm,  xK_d     ), spawn "emacs"),                                          -- launch emacs
-    ((modm,  xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\""), -- launch dmenu
-    ((smodm, xK_p     ), spawn "gmrun"),                                          -- launch gmrun
-    ((smodm, xK_c     ), kill),                                                   -- close focused window
-    ((modm,  xK_space ), sendMessage NextLayout),                                 -- Rotate through the available layout algorithms
-    ((smodm, xK_space ), setLayout $ XMonad.layoutHook conf),                     -- Reset the layouts on the current workspace to default
-    ((modm,  xK_n     ), refresh),                                                -- Resize viewed windows to the correct size
-    ((modm,  xK_Tab   ), windows W.focusDown),                                    -- Move focus to the next window
-    ((modm,  xK_j     ), windows W.focusDown),                                    -- Move focus to the next window
-    ((modm,  xK_k     ), windows W.focusUp),                                      -- Move focus to the previous window
-    ((modm,  xK_m     ), windows W.focusMaster),                                  -- Move focus to the master window
-    ((modm,  xK_Return), windows W.swapMaster),                                   -- Swap the focused window and the master window
-    ((smodm, xK_j     ), windows W.swapDown),                                     -- Swap the focused window with the next window
-    ((smodm, xK_k     ), windows W.swapUp),                                       -- Swap the focused window with the previous window
-    ((modm,  xK_h     ), sendMessage Shrink),                                     -- Shrink the master area
-    ((modm,  xK_l     ), sendMessage Expand),                                     -- Expand the master area
-    ((modm,  xK_t     ), withFocused $ windows . W.sink),                         -- Push window back into tiling
-    ((modm,  xK_comma ), sendMessage (IncMasterN 1)),                             -- Increment the number of windows in the master area
-    ((modm,  xK_period), sendMessage (IncMasterN (-1))),                          -- Deincrement the number of windows in the master area
-    ((smodm, xK_q     ), io $ exitWith ExitSuccess),                              -- Quit xmonad
-    ((modm,  xK_q     ), spawn "xmonad --recompile; xmonad --restart")]           -- Restart xmonad
+    ((smodm, xK_Return), spawn $ XMonad.terminal conf),                 -- launch a terminal
+    ((modm,  xK_d     ), spawn "emacs"),                                -- launch emacs
+    ((modm,  xK_p     ), spawn "dmenu_launcher"),                       -- launch dmenu
+    ((smodm, xK_p     ), spawn "gmrun"),                                -- launch gmrun
+    ((smodm, xK_c     ), kill),                                         -- close focused window
+    ((modm,  xK_space ), sendMessage NextLayout),                       -- Rotate through the available layout algorithms
+    ((smodm, xK_space ), setLayout $ XMonad.layoutHook conf),           -- Reset the layouts on the current workspace to default
+    ((modm,  xK_n     ), refresh),                                      -- Resize viewed windows to the correct size
+    ((modm,  xK_Tab   ), windows W.focusDown),                          -- Move focus to the next window
+    ((modm,  xK_j     ), windows W.focusDown),                          -- Move focus to the next window
+    ((modm,  xK_k     ), windows W.focusUp),                            -- Move focus to the previous window
+    ((modm,  xK_m     ), windows W.focusMaster),                        -- Move focus to the master window
+    ((modm,  xK_Return), windows W.swapMaster),                         -- Swap the focused window and the master window
+    ((smodm, xK_j     ), windows W.swapDown),                           -- Swap the focused window with the next window
+    ((smodm, xK_k     ), windows W.swapUp),                             -- Swap the focused window with the previous window
+    ((modm,  xK_h     ), sendMessage Shrink),                           -- Shrink the master area
+    ((modm,  xK_l     ), sendMessage Expand),                           -- Expand the master area
+    ((modm,  xK_t     ), withFocused $ windows . W.sink),               -- Push window back into tiling
+    ((modm,  xK_comma ), sendMessage (IncMasterN 1)),                   -- Increment the number of windows in the master area
+    ((modm,  xK_period), sendMessage (IncMasterN (-1))),                -- Deincrement the number of windows in the master area
+    ((smodm, xK_q     ), io $ exitWith ExitSuccess),                    -- Quit xmonad
+    ((modm,  xK_q     ), spawn "xmonad --recompile; xmonad --restart")] -- Restart xmonad
     ++
 
     --
@@ -95,7 +94,7 @@ myLayout = tiled ||| Mirror tiled ||| Full
 ------------------------------------------------------------------------
 -- Window rules:
 --
-myManageHook = manageDocks <+> composeAll
+myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore

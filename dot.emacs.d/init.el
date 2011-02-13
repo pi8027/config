@@ -49,6 +49,11 @@
 	(set-scroll-bar-mode nil))
 (setq scroll-step 5)
 
+;; viper-mode
+
+(setq viper-mode t)
+(require 'viper)
+
 ;; color
 
 (defun color-theme-pi8027 ()
