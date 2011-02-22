@@ -1,23 +1,53 @@
 
 source ~/.zshrc.local
 
+# autoload
+
+autoload -Uz colors ; colors
+autoload -Uz compinit ; compinit
+autoload -Uz add-zsh-hook
+autoload -Uz vcs_info
+autoload -Uz is-at-least
+
+# options
+
+setopt correct
+setopt list_packed
+setopt nolistbeep
+
+# sed scripts
+
+homerep_sedscript="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
+
 # prompt
 
-autoload colors
-colors
-
 if [ $TERM != "dumb" ]; then
-	PROMPT="%U%{${fg[red]}%}[%n@%M]%{${reset_color}%}%u(%j)%# "
-	PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
-	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
+	PROMPT="%U%F{red}[%n@%M]%f%u(%j)%# "
+	PROMPT2="%F{red}%_%%%f "
+	SPROMPT="%F{red}%r is correct? [n,y,a,e]:%f "
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+        PROMPT="%F{cyan}$(echo ${HOST%%.*} | tr "[a-z]" "[A-Z]") ${PROMPT}"
 else
 	PROMPT="%U[%n@%M]%u(%j)%# "
 	PROMPT2="%_%% "
 	SPROMPT="%r is correct? [n,y,a,e]: "
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+        PROMPT="$(echo ${HOST%%.*} | tr "[a-z]" "[A-Z]") ${PROMPT}"
 fi
-RPROMPT="[%~]"
+
+function _update_rprompt() {
+    LANG=en_US.UTF-8 vcs_info
+    if [ -n "$vcs_info_msg_0_" ]; then
+        psvar=(`echo "$vcs_info_msg_0_" | sed -e $homerep_sedscript`
+            "$vcs_info_msg_1_" "$vcs_info_msg_2_" "$vcs_info_msg_3_")
+        [[ -n $psvar[4] ]] && psvar[4]=" "$psvar[4]
+        RPROMPT="%F{green}[%1v:%2v] %F{red}%3v%f%4v"
+    else
+        RPROMPT="[%~]"
+    fi
+}
+
+add-zsh-hook precmd _update_rprompt
 
 # history
 
@@ -30,16 +60,10 @@ setopt hist_ignore_all_dups
 
 # comp
 
-autoload -Uz compinit ;compinit
 zstyle ":completion:*" list-colors ${(s.:.)LS_COLORS}
-zstyle ":completion:*:sudo:*" command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
+zstyle ":completion:*:sudo:*" command-path \
+    /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
 LISTMAX=0
-
-# options
-
-setopt correct
-setopt list_packed
-setopt nolistbeep
 
 # alias
 
@@ -54,16 +78,16 @@ alias gs="rlwrap gs"
 alias ghc="ghc --make"
 alias hoogle="hoogle --color=true"
 alias google="w3m http://google.com/"
-alias cabal-install="sudo cabal install --global"
 
 # screen
 
 #if [ -z $STY ]; then
-#	screen -R
+#	screen
 #else
-#	preexec(){
-#		echo -ne "\ek`pwd | sed -e "s/^\/Users\/pi8027/~/g"`% $1\e\\"
+#	function _update_screen_title() {
+#		echo -ne "\ek`pwd | sed -e $homerep_sedscript`% $1\e\\" #FIXME : $1
 #	}
+#    add-zsh-hook precmd _update_screen_title
 #fi
 
 # tmux
@@ -71,5 +95,21 @@ alias cabal-install="sudo cabal install --global"
 if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
 	tmux -u
 	export WITHOUT_SCREEN=1
+fi
+
+# vcs_info
+
+zstyle ":vcs_info:*" enable git svn hg bzr darcs
+zstyle ":vcs_info:*" formats "%R" "%b" "%S" ""
+zstyle ":vcs_info:*" actionformats "%R" "%b|%a" "%S" ""
+zstyle ":vcs_info:(svn|bzr):*" branchformat "%b:r%r"
+zstyle ":vcs_info:bzr:*" use-simple true
+
+if is-at-least 4.3.10; then
+    zstyle ":vcs_info:git:*" check-for-changes true
+    zstyle ":vcs_info:git:*" stagedstr "+"
+    zstyle ":vcs_info:git:*" unstagedstr "-"
+    zstyle ":vcs_info:git:*" formats "%R" "%b" "%S" "%c%u"
+    zstyle ":vcs_info:git:*" actionformats "%R" "%b|%a" "%S" "%c%u"
 fi
 

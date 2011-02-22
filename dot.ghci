@@ -1,2 +1,19 @@
+
 :set +t +s
 :set prompt "ghci> "
+
+:m - Prelude
+:m + GOA
+setLambdabotHome "/home/pi8027/.cabal/bin/"
+:def bs        lambdabot "botsnack"
+:def pl        lambdabot "pl"
+:def pointfull lambdabot "pointfull"
+:def index     lambdabot "index"
+:def docs      lambdabot "docs"
+:def instances lambdabot "instances"
+:def hoogle    lambdabot "hoogle"
+:def source    lambdabot "fptools"
+:def where     lambdabot "where"
+:def version   lambdabot "version"
+:def src       lambdabot "src"
+
