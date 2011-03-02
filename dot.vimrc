@@ -74,7 +74,8 @@ set nobackup
 
 """" Settings for each file types
 
-au BufNewFile,BufRead  *.agda setf agda
+au BufNewFile,BufRead *.agda setf agda
+au BufNewFile,BufRead *tmux.conf setf tmux
 
 autocmd FileType haskell setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType agda setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
