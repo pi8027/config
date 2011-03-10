@@ -1,6 +1,7 @@
 .emacs.d
 .gitconfig
 .ghci
+.mlterm
 .screenrc
 .skk
 .tmux.conf
