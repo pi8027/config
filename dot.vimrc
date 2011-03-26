@@ -41,6 +41,10 @@ set ambiwidth=double
 set wildmenu
 set wildmode=longest:full,full
 
+set guifont=M+\ 2m\ medium\ 9
+set guioptions=aegirLt
+set linespace=-3
+
 colorscheme desert
 
 let &statusline = ' '

@@ -121,7 +121,7 @@ myStartupHook = do
 --
 main = xmonad defaultConfig {
       -- simple stuff
-        terminal           = "mlterm",
+        terminal           = "urxvt",
         focusFollowsMouse  = False,
         borderWidth        = 3,
         modMask            = mod4Mask,

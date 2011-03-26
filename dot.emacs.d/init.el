@@ -51,8 +51,8 @@
 
 ;; viper-mode
 
-(setq viper-mode t)
-(require 'viper)
+;(setq viper-mode t)
+;(require 'viper)
 
 ;; color
 
@@ -130,6 +130,13 @@
 ;; haskell-mode
 
 (load "haskell-site-file")
+
+;; agda-mode
+
+(load "agda2-mode")
+
+(add-hook 'agda2-mode-hook
+    (function (lambda () (add-to-list 'agda2-ghci-options "+RTS -M2G -K1G -RTS"))))
 
 ;; sdic-mode
 
