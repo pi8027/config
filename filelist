@@ -10,6 +10,7 @@
 .vimperator
 .vimperatorrc
 .xmonad
+.xsession
 .zshrc
 .zshenv
 .zlogin

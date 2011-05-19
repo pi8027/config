@@ -49,6 +49,10 @@
 	(set-scroll-bar-mode nil))
 (setq scroll-step 5)
 
+;; backup
+
+(setq backup-inhibited t)
+
 ;; viper-mode
 
 ;(setq viper-mode t)
@@ -134,6 +138,8 @@
 ;; agda-mode
 
 (load "agda2-mode")
+
+(setq agda2-include-dirs (quote ("" "/home/pi8027/lib/agda/")))
 
 (add-hook 'agda2-mode-hook
     (function (lambda () (add-to-list 'agda2-ghci-options "+RTS -M2G -K1G -RTS"))))
