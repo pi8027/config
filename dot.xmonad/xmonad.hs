@@ -123,7 +123,7 @@ main = xmonad defaultConfig {
       -- simple stuff
         terminal           = "urxvt",
         focusFollowsMouse  = False,
-        borderWidth        = 3,
+        borderWidth        = 1,
         modMask            = mod4Mask,
         numlockMask        = mod2Mask,
         workspaces         = [[c] | c <- ['1'..'9']],

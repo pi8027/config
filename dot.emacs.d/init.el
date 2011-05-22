@@ -65,9 +65,11 @@
   (interactive)
   (color-theme-install
    '(color-theme-pi8027
-     ((foreground-color . "white")
+     ((background-mode . dark)
       (background-color . "black")
-      (background-mode . dark))
+      (foreground-color . "white")
+      (border-color . "white")
+      (cursor-color . "red"))
      (default ((t (nil))))
      (region ((t (:foreground "yellow" :background "brown"))))
      (underline ((t (:foreground "yellow" :underline t))))
@@ -104,6 +106,10 @@
 		 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("M+ 2m" . "iso10646-1"))
 		 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("M+ 2m" . "iso10646-1")))))
 
+;; auto-complete.el
+
+(require 'auto-complete)
+(global-auto-complete-mode t)
 
 ;; ddskk
 
