@@ -93,7 +93,11 @@ alias google="w3m http://google.com/"
 # tmux
 
 if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
+    eval `ssh-agent`
 	tmux -u
+    kill $SSH_AGENT_PID
+    export SSH_AGENT_PID=
+    export SSH_AUTH_SOCK=
 	export WITHOUT_SCREEN=1
 fi
 

@@ -18,21 +18,26 @@ urxvt*color13: #FF00FF
 urxvt*color14: #00FFFF
 urxvt*color15: #FFFFFF
 
+!rxvt-unicode フォント設定
 !fc-list, xlsfonts 参照
-!urxvt*font: x:6x13,\
-!            xft:IPAGothic:pixelsize=13
-!urxvt*boldFont: x:6x13bold,\
-!                xft: IPAGothic:pixelsize=13
 
-!urxvt*font: x:-adobe-courier-medium-r-normal--12-120-75-75-m-70-iso10646-1, \
-!            xft:IPAGothic:pixelsize=12
-!urxvt*boldFont: x:-adobe-courier-bold-r-normal--12-120-75-75-m-70-iso10646-1, \
-!            xft:IPAGothic:pixelsize=12
+urxvt*font: \
+    terminus-12, \
+    -mplus-gothic-medium-r-normal--10-100-75-75-c-50-jisx0201.1976-0, \
+    -mplus-gothic-medium-r-normal--10-100-75-75-c-100-jisx0208.1990-0, \
+urxvt*boldFont: \
+    terminus-bold-12, \
+    -mplus-gothic-bold-r-normal--10-100-75-75-c-50-jisx0201.1976-0, \
+    -mplus-gothic-bold-r-normal--10-100-75-75-c-100-jisx0208.1990-0
+urxvt*italicFont: \
+    terminus-12, \
+    -mplus-gothic-medium-r-normal--10-100-75-75-c-50-jisx0201.1976-0, \
+    -mplus-gothic-medium-r-normal--10-100-75-75-c-100-jisx0208.1990-0, \
+urxvt*boldItalicFont: \
+    terminus-bold-12, \
+    -mplus-gothic-bold-r-normal--10-100-75-75-c-50-jisx0201.1976-0, \
+    -mplus-gothic-bold-r-normal--10-100-75-75-c-100-jisx0208.1990-0
 
-urxvt*font: terminus-12, mplus_f12r-iso
-urxvt*boldFont: terminus-bold-12, mplus_f12b-iso
-urxvt*italicFont: terminus-12, mplus_f12r-iso
-urxvt*boldItalicFont: terminus-bold-12, mplus_f12b-iso
 urxvt*lineSpace: 0
 
 urxvt*scrollBar: False

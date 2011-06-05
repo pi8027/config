@@ -7,15 +7,20 @@
 
 (defun add-load-paths (paths)
   (if (null paths)
-      '()
+      nil
       (progn
-            (let ((default-directory (car paths))) (normal-top-level-add-subdirs-to-load-path))
-            (add-load-paths (cdr paths)))))
+       (let* ((head (car paths))
+              (default-directory head))
+             (if (file-exists-p head)
+                 (normal-top-level-add-subdirs-to-load-path)))
+       (add-load-paths (cdr paths)))))
 
-;(add-load-paths
-;    '("~/.emacs.d/site-lisp" "/opt/local/share/emacs/site-lisp" "/opt/local/share/emacs/23.2/site-lisp"))
-
-(add-load-paths '("~/.emacs.d/site-lisp" "/usr/share/emacs/site-lisp" "/usr/share/emacs23/site-lisp"))
+(add-load-paths
+    '("~/.emacs.d/site-lisp"
+      "/usr/share/emacs/site-lisp"
+      "/usr/share/emacs23/site-lisp"
+      "/opt/local/share/emacs/site-lisp"
+      "/opt/local/share/emacs/23.2/site-lisp"))
 
 ;; key binding
 
@@ -27,7 +32,7 @@
 
 (global-set-key "\C-h" 'backward-delete-char)
 
-(global-set-key "\177" 'delete-char)
+(global-set-key "\177" 'backward-delete-char)
 
 ;; tab
 
@@ -137,6 +142,14 @@
 
 (setq YaTeX-kanji-code 4)
 
+(setq YaTeX-fill-column 100)
+
+;; gauche
+
+(setq scheme-program-name "gosh -i")
+(autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
+(autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
+
 ;; haskell-mode
 
 (load "haskell-site-file")
@@ -158,4 +171,17 @@
 
 (setq sdic-window-height 10
 	  sdic-disable-select-window t)
+
+;; ielm
+
+(defun ielm-auto-complete ()
+  "Enables `auto-complete' support in \\[ielm]."
+  (setq ac-sources '(ac-source-functions
+                     ac-source-variables
+                     ac-source-features
+                     ac-source-symbols
+                     ac-source-words-in-same-mode-buffers))
+  (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
+  (auto-complete-mode 1))
+(add-hook 'ielm-mode-hook 'ielm-auto-complete)
 
