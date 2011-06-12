@@ -88,6 +88,13 @@ autocmd FileType make setlocal noexpandtab
 
 let hs_highlight_debug = 1
 
+"""" Dvorak Key Mapping
+
+noremap h h
+noremap t j
+noremap n k
+noremap s l
+
 """" Date and Time
 
 if exists("*strftime")

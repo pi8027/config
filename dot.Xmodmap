@@ -1,18 +1,50 @@
 
 ! swap numbers for symbols
-keycode 10 = exclam 1 exclam 1
-keycode 11 = at 2 at 2
-keycode 12 = numbersign 3 numbersign 3
-keycode 13 = dollar 4 dollar 4
-keycode 14 = percent 5 percent 5
-keycode 15 = asciicircum 6 asciicircum 6
-keycode 16 = ampersand 7 ampersand 7
-keycode 17 = asterisk 8 asterisk 8
-keycode 18 = parenleft 9 parenleft 9
-keycode 19 = parenright 0 parenright 0
-
-! swap colon for semicolon
-keycode 47 = colon semicolon colon semicolon
+keysym 1 = exclam 1
+keysym 2 = at 2
+keysym 3 = numbersign 3
+keysym 4 = dollar 4
+keysym 5 = percent 5
+keysym 6 = asciicircum 6
+keysym 7 = ampersand 7
+keysym 8 = asterisk 8
+keysym 9 = parenleft 9
+keysym 0 = parenright 0
+keysym minus = bracketleft braceleft
+keysym equal = bracketright braceright
+keysym q = quoteright quotedbl
+keysym w = comma less
+keysym e = period greater
+keysym r = p P
+keysym t = y Y
+keysym y = f F
+keysym u = g G
+keysym i = c C
+keysym o = r R
+keysym p = l L
+keysym bracketleft = slash question
+keysym bracketright = equal plus
+keysym a = a A
+keysym s = o O
+keysym d = e E
+keysym f = u U
+keysym g = i I
+keysym h = d D
+keysym j = h H
+keysym k = t T
+keysym l = n N
+keysym semicolon = s S
+keysym quoteright = minus underscore
+keysym z = semicolon colon
+keysym x = q Q
+keysym c = j J
+keysym v = k K
+keysym b = x X
+keysym n = b B
+keysym m = m M
+keysym comma = w W
+keysym period = v V
+keysym slash = z Z
 
 ! CapsLock to Control
 remove Lock = Caps_Lock

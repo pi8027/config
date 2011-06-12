@@ -165,12 +165,17 @@
 
 ;; sdic-mode
 
+(autoload 'sdic "sdic" t nil)
+
 (global-set-key "\C-cw" 'sdic-describe-word)
 
 (global-set-key "\C-c\C-w" 'sdic-describe-word-at-point)
 
-(setq sdic-window-height 10
+(setq sdic-window-height 15
 	  sdic-disable-select-window t)
+
+(setq sdic-eiwa-dictionary-list '((sdicf-client "/usr/share/dict/eijiro.sdic")))
+(setq sdic-waei-dictionary-list '((sdicf-client "/usr/share/dict/waeijiro.sdic")))
 
 ;; ielm
 
