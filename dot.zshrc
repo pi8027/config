@@ -101,6 +101,22 @@ if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
 	export WITHOUT_SCREEN=1
 fi
 
+# directory stack
+
+alias pd="pushd"
+alias bd="popd"
+
+# make and change directory
+
+function mpd(){
+    mkdir -p $1
+    pd $1
+}
+
+function daypd(){
+    mpd `date "+%Y-%m-%d"`
+}
+
 # vcs_info
 
 zstyle ":vcs_info:*" enable git svn hg bzr darcs

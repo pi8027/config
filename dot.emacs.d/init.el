@@ -190,3 +190,6 @@
   (auto-complete-mode 1))
 (add-hook 'ielm-mode-hook 'ielm-auto-complete)
 
+;; w3m
+
+(require 'w3m-load)

@@ -1,5 +1,9 @@
 
 import XMonad
+import XMonad.Layout.Simplest
+import XMonad.Layout.Tabbed
+import XMonad.Layout.Spiral
+import Data.Ratio
 import Data.Monoid
 import System.Exit
 
@@ -78,19 +82,26 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 ------------------------------------------------------------------------
 -- Layouts:
 --
-myLayout = tiled ||| Mirror tiled ||| Full
-  where
-     -- default tiling algorithm partitions the screen into two panes
-     tiled   = Tall nmaster delta ratio
+myLayout = tabbed ||| tiled ||| Mirror tiled ||| Full where
+    -- default tiling algorithm partitions the screen into two panes
+    tiled = Tall 1 (3/100) (2/3)
 
-     -- The default number of windows in the master pane
-     nmaster = 1
+    theme = Theme
+        { activeColor         = "#000000"
+        , inactiveColor       = "#000000"
+        , urgentColor         = "#FFFF00"
+        , activeBorderColor   = "#FFFFFF"
+        , inactiveBorderColor = "#333333"
+        , urgentBorderColor   = "#00FF00"
+        , activeTextColor     = "#FFFFFF"
+        , inactiveTextColor   = "#666666"
+        , urgentTextColor     = "#FF0000"
+        , fontName            = "-misc-fixed-medium-r-normal--10-*"
+        , decoWidth           = 200
+        , decoHeight          = 12
+        }
 
-     -- Default proportion of screen occupied by master pane
-     ratio   = 2/3
-
-     -- Percent of screen to increment by when resizing panes
-     delta   = 3/100
+    tabbed = addTabs shrinkText theme Simplest
 
 ------------------------------------------------------------------------
 -- Window rules:
