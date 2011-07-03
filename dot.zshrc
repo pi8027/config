@@ -120,16 +120,10 @@ function daypd(){
 # vcs_info
 
 zstyle ":vcs_info:*" enable git svn hg bzr darcs
-zstyle ":vcs_info:*" formats "%R" "%b" "%S" ""
-zstyle ":vcs_info:*" actionformats "%R" "%b|%a" "%S" ""
-zstyle ":vcs_info:(svn|bzr):*" branchformat "%b:r%r"
-zstyle ":vcs_info:bzr:*" use-simple true
-
-if is-at-least 4.3.10; then
-    zstyle ":vcs_info:git:*" check-for-changes true
-    zstyle ":vcs_info:git:*" stagedstr "+"
-    zstyle ":vcs_info:git:*" unstagedstr "-"
-    zstyle ":vcs_info:git:*" formats "%R" "%b" "%S" "%c%u"
-    zstyle ":vcs_info:git:*" actionformats "%R" "%b|%a" "%S" "%c%u"
-fi
+zstyle ":vcs_info:*" max-exports 4
+zstyle ":vcs_info:*" check-for-changes true
+zstyle ":vcs_info:*" stagedstr "+"
+zstyle ":vcs_info:*" unstagedstr "-"
+zstyle ":vcs_info:*" formats "%R" "%b" "%S" "%c%u"
+zstyle ":vcs_info:*" actionformats "%R" "%b|%a" "%S" "%c%u"
 
