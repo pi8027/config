@@ -68,7 +68,7 @@ LISTMAX=0
 # alias
 
 alias history-all="history -E 1"
-alias ls="ls -G -p"
+alias ls="ls -F --color"
 alias less="less --quit-if-one-screen --raw-control-chars"
 alias emacs="emacs --no-window-system"
 alias gosh="rlwrap gosh"
@@ -126,4 +126,22 @@ zstyle ":vcs_info:*" stagedstr "+"
 zstyle ":vcs_info:*" unstagedstr "-"
 zstyle ":vcs_info:*" formats "%R" "%b" "%S" "%c%u"
 zstyle ":vcs_info:*" actionformats "%R" "%b|%a" "%S" "%c%u"
+
+function vcd(){
+    LANG=en_US.UTF-8 vcs_info
+    if [ -n "$vcs_info_msg_0_" ]; then
+        cd "$vcs_info_msg_0_/$1"
+    else
+        echo "vchome : Repository not found."
+    fi
+}
+
+function _vcd(){
+    LANG=en_US.UTF-8 vcs_info
+    if [ -n "$vcs_info_msg_0_" ]; then
+        _files -W "$vcs_info_msg_0_"
+    fi
+}
+
+compdef _vcd vcd
 
