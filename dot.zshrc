@@ -15,9 +15,42 @@ setopt correct
 setopt list_packed
 setopt nolistbeep
 
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_silent
+
+# typeset
+
+typeset -U cdpath fpath manpath
+
+cdpath=(~)
+
 # sed scripts
 
 homerep_sedscript="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
+
+# screen
+
+#if [ -z $STY ]; then
+#	screen
+#else
+#	function _update_screen_title() {
+#		echo -ne "\ek`pwd | sed -e $homerep_sedscript`% $1\e\\" #FIXME : $1
+#	}
+#    add-zsh-hook precmd _update_screen_title
+#fi
+
+# tmux
+
+if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
+    eval `ssh-agent`
+	tmux -u
+    kill $SSH_AGENT_PID
+    export SSH_AGENT_PID=
+    export SSH_AUTH_SOCK=
+	export WITHOUT_SCREEN=1
+fi
 
 # prompt
 
@@ -49,6 +82,10 @@ function _update_rprompt() {
 
 add-zsh-hook precmd _update_rprompt
 
+# zle
+
+#bindkey -v
+
 # history
 
 HISTFILE=$HOME/.zsh-history
@@ -63,6 +100,7 @@ setopt hist_ignore_all_dups
 zstyle ":completion:*" list-colors ${(s.:.)LS_COLORS}
 zstyle ":completion:*:sudo:*" command-path \
     /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
+zstyle ":completion:*:cd:*" local-directories path-directories
 LISTMAX=0
 
 # alias
@@ -79,32 +117,16 @@ alias ghc="ghc --make"
 alias hoogle="hoogle --color=true"
 alias google="w3m http://google.com/"
 
-# screen
-
-#if [ -z $STY ]; then
-#	screen
-#else
-#	function _update_screen_title() {
-#		echo -ne "\ek`pwd | sed -e $homerep_sedscript`% $1\e\\" #FIXME : $1
-#	}
-#    add-zsh-hook precmd _update_screen_title
-#fi
-
-# tmux
-
-if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
-    eval `ssh-agent`
-	tmux -u
-    kill $SSH_AGENT_PID
-    export SSH_AGENT_PID=
-    export SSH_AUTH_SOCK=
-	export WITHOUT_SCREEN=1
-fi
-
 # directory stack
 
-alias pd="pushd"
-alias bd="popd"
+alias pd="popd"
+alias dirs="dirs -v"
+
+function _print_dirstack(){
+    \dirs -v
+}
+
+add-zsh-hook chpwd _print_dirstack
 
 # make and change directory
 

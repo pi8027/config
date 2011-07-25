@@ -163,6 +163,10 @@
 (add-hook 'agda2-mode-hook
     (function (lambda () (add-to-list 'agda2-ghci-options "+RTS -M2G -K1G -RTS"))))
 
+;; proof general
+
+(load "proof-site")
+
 ;; sdic-mode
 
 (autoload 'sdic "sdic" t nil)
