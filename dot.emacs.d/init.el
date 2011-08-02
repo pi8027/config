@@ -40,6 +40,8 @@
 
 ;; view
 
+(setq frame-title-format "GNU Emacs")
+
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 
@@ -82,7 +84,8 @@
      (italic ((t (:foreground "dark red" :italic t))))
      (bold-italic ((t (:foreground "dark red" :bold t :italic t))))
      (font-lock-comment-face ((t (:foreground "Firebrick"))))
-     (bold ((t (:bold)))))))
+     (bold ((t (:bold))))
+     (font-lock-function-name-face ((t (:foreground "#FFFFFF")))))))
 
 (require 'color-theme)
 (color-theme-initialize)

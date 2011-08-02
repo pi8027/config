@@ -9,6 +9,7 @@
 .vimrc
 .vimperator
 .vimperatorrc
+.xmobarrc
 .xmonad
 .xsession
 .zshrc

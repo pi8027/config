@@ -1,0 +1,22 @@
+Config
+  { font = "-misc-fixed-medium-r-normal--10-*"
+  , bgColor = "#000"
+  , fgColor = "#fff"
+  , border = NoBorder
+  , borderColor = "white"
+  , position = Top
+  , lowerOnStart = True
+  , commands =
+    [ Run StdinReader
+    , Run Cpu ["-L","5","-H","50","--low","#6ff","--normal","#3fc","--high","#f33","-t","<total>%"] 10
+    , Run Memory ["-t","<usedratio>%"] 10
+    , Run Swap ["-t","<usedratio>%"] 10
+    , Run Network "eth0" ["-L","10","-H","50","--low","#6ff","--normal","#3fc","--high","#f33"] 10
+    , Run Network "eth1" ["-L","10","-H","50","--low","#6ff","--normal","#3fc","--high","#f33"] 10
+    , Run Network "wlan0" ["-L","10","-H","50","--low","#6ff","--normal","#3fc","--high","#f33"] 10
+    , Run Date "%Y/%m/%d %H:%M %Z" "date" 10
+    , Run Battery ["-t","<left>% <timeleft>"] 10 ]
+  , sepChar = "%"
+  , alignSep = "{}"
+  , template = "%StdinReader% {} B: %battery% <fc=,#fff> </fc> P: %cpu% <fc=,#fff> </fc> M: %memory%, %swap% <fc=,#fff> </fc> %eth1% <fc=,#fff> </fc> %wlan0% <fc=,#fff> </fc> <fc=#ccf>%date%</fc>"
+  }
