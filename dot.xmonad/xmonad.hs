@@ -173,16 +173,16 @@ keys' conf = M.fromList $ [
 --
 
 mouseBindings' :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
-mouseBindings' (XConfig {XMonad.modMask = modm}) = M.fromList $ [
+mouseBindings' (XConfig {XMonad.modMask = modm}) = M.fromList [
 
   -- mod-button1, Set the window to floating mode and move by dragging
-  ((modm, button1), (\w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)),
+  ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster),
 
   -- mod-button2, Raise the window to the top of the stack
-  ((modm, button2), (\w -> focus w >> windows W.shiftMaster)),
+  ((modm, button2), \w -> focus w >> windows W.shiftMaster),
 
   -- mod-button3, Set the window to floating mode and resize by dragging
-  ((modm, button3), (\w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster))]
+  ((modm, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)]
 
   -- you may also bind events to the mouse scroll wheel (button4 and button5)
 
@@ -237,7 +237,7 @@ logHook' n h = dynamicLogWithPP PP {
   ppWsSep           = "",
   ppTitle           = xmobarColor "#0f0" "" . shorten 60,
   ppLayout          = id,
-  ppOrder           = (\(a : b : c : d : tail) -> d : a : b : c : tail),
+  ppOrder           = \(a : b : c : d : tail) -> d : a : b : c : tail,
   ppSort            = getSortByTag,
   ppExtras          = [Just <$> io getCurrentDirectory],
   ppOutput          = hPutStrLn h }
@@ -245,7 +245,7 @@ logHook' n h = dynamicLogWithPP PP {
   where
 
   sepBy :: String -> [String] -> String
-  sepBy sep = concat . intersperse sep . filter (not . null)
+  sepBy sep = intercalate sep . filter (not . null)
 
   dynamicLogWithPP :: PP -> X ()
   dynamicLogWithPP pp = dynamicLogString pp >>= io . ppOutput pp
@@ -259,7 +259,7 @@ logHook' n h = dynamicLogWithPP PP {
     let ld = description . W.layout . W.workspace . W.current $ winset
     let ws = pprWindowSet sort' urgents pp winset
     wt <- maybe (return "") (fmap show . getName) . W.peek $ winset
-    extras <- sequence $ map (flip catchX (return Nothing)) $ ppExtras pp
+    extras <- mapM (`catchX` return Nothing) $ ppExtras pp
     return $ encodeOutput . sepBy (ppSep pp) . ppOrder pp $
       [ ws
       , ppLayout pp ld
@@ -272,8 +272,7 @@ logHook' n h = dynamicLogWithPP PP {
 --
 
 startupHook' :: X ()
-startupHook' = do
-  setDefaultCursor xC_xterm
+startupHook' = return ()
 
 ------------------------------------------------------------------------
 -- Run XMonad
