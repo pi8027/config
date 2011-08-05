@@ -1,4 +1,6 @@
 
+{-# LANGUAGE MultiParamTypeClasses, TypeSynonymInstances #-}
+
 module Main where
 
 import Data.Maybe
@@ -7,6 +9,7 @@ import Data.Ratio
 import Data.Monoid
 import qualified Data.Map as M
 import Control.Applicative
+import Control.Monad
 import System.Exit
 import System.IO
 import System.Directory
@@ -19,6 +22,7 @@ import XMonad.Layout.Circle
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.IndependentScreens
+import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Magnifier
 import XMonad.Layout.Simplest
 import XMonad.Layout.Tabbed
@@ -32,6 +36,24 @@ import XMonad.Util.NamedWindows
 import XMonad.Util.Run
 import XMonad.Util.WorkspaceCompare
 import qualified XMonad.StackSet as W
+
+------------------------------------------------------------------------
+-- Border Layout
+--
+
+data Border a = Border Dimension deriving (Read, Show)
+
+instance LayoutModifier Border Window where
+  modifyLayout (Border width) w r = do
+    dpy <- asks display
+    case W.stack w of
+      Nothing -> return () 
+      Just (W.Stack fw uws dws) ->
+        io $ forM_ (fw : (uws ++ dws)) (\win -> setWindowBorderWidth dpy win width)
+    runLayout w r
+
+borderLayout :: Dimension -> l a -> ModifiedLayout Border l a
+borderLayout n = ModifiedLayout (Border n)
 
 ------------------------------------------------------------------------
 -- Theme
@@ -72,7 +94,7 @@ tabTheme = Theme {
   urgentTextColor     = "#F00",
   fontName            = defaultFont,
   decoWidth           = 200,
-  decoHeight          = 10 }
+  decoHeight          = 12 }
 
 ------------------------------------------------------------------------
 -- Key bindings
@@ -170,12 +192,12 @@ mouseBindings' (XConfig {XMonad.modMask = modm}) = M.fromList $ [
 
 layoutHook' =
   avoidStruts $ workspaceDir "~" $
-    addTabs shrinkText tabTheme Simplest |||
-    magnifiercz 1.05 (
+    borderLayout 0 (addTabs shrinkText tabTheme Simplest) |||
+    borderLayout 1 (magnifiercz 1.05 (
       tiled |||
       Mirror tiled |||
       Circle |||
-      withIM (1%6) (ClassName "Skype") Grid)
+      withIM (1%6) (ClassName "Skype") Grid))
 
   where
 
@@ -251,8 +273,7 @@ logHook' n h = dynamicLogWithPP PP {
 
 startupHook' :: X ()
 startupHook' = do
-  setDefaultCursor xC_dot
-  sendMessage Toggle
+  setDefaultCursor xC_xterm
 
 ------------------------------------------------------------------------
 -- Run XMonad
@@ -267,11 +288,11 @@ main = do
     -- simple stuff
     terminal           = "urxvt",
     focusFollowsMouse  = False,
-    borderWidth        = 1,
+    borderWidth        = 0,
     modMask            = mod4Mask,
     numlockMask        = mod2Mask,
     workspaces         = [[c] | c <- ['1'..'9']],
-    normalBorderColor  = "#669",
+    normalBorderColor  = "#009",
     focusedBorderColor = "#f33",
     -- key bindings
     keys               = keys',
