@@ -14,7 +14,7 @@ Config
     , Run Network "eth0" ["-L","10","-H","50","--low","#6ff","--normal","#3fc","--high","#f33"] 10
     , Run Network "eth1" ["-L","10","-H","50","--low","#6ff","--normal","#3fc","--high","#f33"] 10
     , Run Network "wlan0" ["-L","10","-H","50","--low","#6ff","--normal","#3fc","--high","#f33"] 10
-    , Run Date "%Y/%m/%d %H:%M %Z" "date" 10
+    , Run Date "%Y/%m/%d %H:%M:%S %Z" "date" 10
     , Run Battery ["-t","<left>% <timeleft>"] 10 ]
   , sepChar = "%"
   , alignSep = "{}"
