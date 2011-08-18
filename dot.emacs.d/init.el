@@ -123,8 +123,10 @@
 
 (autoload 'skk-mode "skk" nil t)
 (global-set-key "\C-x\C-j" 'skk-mode)
-(global-set-key "\C-xj" 'skk-auto-fill-mode)
-(setq skk-large-jisyo "~/.skk/SKK-JISYO.L")
+;(global-set-key "\C-xj" 'skk-auto-fill-mode)
+(setq skk-server-host "localhost")
+(setq skk-server-port 1178)
+;(setq skk-large-jisyo "~/.skk/SKK-JISYO.L")
 
 (add-hook 'isearch-mode-hook
           #'(lambda ()
@@ -161,7 +163,7 @@
 
 (load "agda2-mode")
 
-(setq agda2-include-dirs (quote ("" "/home/pi8027/lib/agda/")))
+(setq agda2-include-dirs '("" "/home/pi8027/lib/agda/"))
 
 (add-hook 'agda2-mode-hook
     (function (lambda () (add-to-list 'agda2-ghci-options "+RTS -M2G -K1G -RTS"))))
