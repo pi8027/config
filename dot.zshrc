@@ -150,7 +150,7 @@ function cdd(){
         if [ -d "$dir" ]; then
             cd "$dir"
         else
-            echo "error : cdd"
+            echo "cdd : error"
         fi
     else
         echo "usage : cdd [window [pane]]"
@@ -163,7 +163,7 @@ add-zsh-hook chpwd _set_tmuxpwd
 
 function mpd(){
     mkdir -p $1
-    pd $1
+    cd $1
 }
 
 function daypd(){
@@ -192,7 +192,7 @@ function vcd(){
 function _vcd(){
     LANG=en_US.UTF-8 vcs_info
     if [ -n "$vcs_info_msg_0_" ]; then
-        _files -W "$vcs_info_msg_0_"
+        _files -/ -W "$vcs_info_msg_0_"
     fi
 }
 
