@@ -21,22 +21,18 @@ urxvt*color15: #FFFFFF
 !rxvt-unicode フォント設定
 !fc-list, xlsfonts 参照
 
-urxvt*font: \
-    terminus-12, \
-    -mplus-gothic-medium-r-normal--10-100-75-75-c-50-jisx0201.1976-0, \
-    -mplus-gothic-medium-r-normal--10-100-75-75-c-100-jisx0208.1990-0, \
-urxvt*boldFont: \
-    terminus-bold-12, \
-    -mplus-gothic-bold-r-normal--10-100-75-75-c-50-jisx0201.1976-0, \
-    -mplus-gothic-bold-r-normal--10-100-75-75-c-100-jisx0208.1990-0
-urxvt*italicFont: \
-    terminus-12, \
-    -mplus-gothic-medium-r-normal--10-100-75-75-c-50-jisx0201.1976-0, \
-    -mplus-gothic-medium-r-normal--10-100-75-75-c-100-jisx0208.1990-0, \
-urxvt*boldItalicFont: \
-    terminus-bold-12, \
-    -mplus-gothic-bold-r-normal--10-100-75-75-c-50-jisx0201.1976-0, \
-    -mplus-gothic-bold-r-normal--10-100-75-75-c-100-jisx0208.1990-0
+urxvt*font:\
+    -mplus-gothic-medium-r-normal--12-120-75-75-c-60-iso8859-1,\
+    -mplus-gothic-medium-r-normal--12-120-75-75-c-120-jisx0208.1990-0
+urxvt*boldFont:\
+    -mplus-gothic-bold-r-normal--12-120-75-75-c-60-iso8859-1,\
+    -mplus-gothic-bold-r-normal--12-120-75-75-c-120-jisx0208.1990-0
+urxvt*italicFont:\
+    -mplus-gothic-medium-r-normal--12-120-75-75-c-60-iso8859-1,\
+    -mplus-gothic-medium-r-normal--12-120-75-75-c-120-jisx0208.1990-0
+urxvt*boldItalicFont:\
+    -mplus-gothic-bold-r-normal--12-120-75-75-c-60-iso8859-1,\
+    -mplus-gothic-bold-r-normal--12-120-75-75-c-120-jisx0208.1990-0
 
 urxvt*lineSpace: 0
 
