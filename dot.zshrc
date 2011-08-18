@@ -140,7 +140,7 @@ function _set_tmuxpwd(){
 function cdd(){
     if [ -n "$1" ]; then
         if [ -n "$2" ]; then
-            name="TMUXPWD_${1}_${2}"
+            name="TMUXPWD_$1_$2"
         else
             name="TMUXPWD_$1"
         fi
