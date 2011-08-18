@@ -18,5 +18,5 @@ Config
     , Run Battery ["-t","<left>% <timeleft>"] 10 ]
   , sepChar = "%"
   , alignSep = "{}"
-  , template = "%StdinReader% {} B: %battery% <fc=,#fff> </fc> P: %cpu% <fc=,#fff> </fc> M: %memory%, %swap% <fc=,#fff> </fc> %eth1% <fc=,#fff> </fc> %wlan0% <fc=,#fff> </fc> <fc=#ccf>%date%</fc>"
+  , template = "%StdinReader% {} B: %battery% <fc=,#fff> </fc> P: %cpu% <fc=,#fff> </fc> M: %memory%, %swap% <fc=,#fff> </fc> %eth0% <fc=,#fff> </fc> %wlan0% <fc=,#fff> </fc> <fc=#ccf>%date%</fc>"
   }

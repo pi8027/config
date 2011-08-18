@@ -132,6 +132,10 @@ keys' conf = M.fromList $ [
   ((smodm,  xK_w         ), windows W.swapDown),
   ((smodm,  xK_v         ), windows W.swapUp),
   ((smodm,  xK_m         ), windows W.swapMaster),
+  ((smodm,  xK_h         ), angleSwap (pi * 5 / 6) (pi / 3)),
+  ((smodm,  xK_t         ), angleSwap (pi * 2 / 6) (pi / 3)),
+  ((smodm,  xK_n         ), angleSwap (pi * 8 / 6) (pi / 3)),
+  ((smodm,  xK_s         ), angleSwap (pi * 11 / 6) (pi / 3)),
   -- magnifier
   ((cmodm,  xK_w         ), sendMessage MagnifyMore),
   ((cmodm,  xK_v         ), sendMessage MagnifyLess),
@@ -204,7 +208,7 @@ mouseBindings' (XConfig {XMonad.modMask = modm}) = M.fromList [
 layoutHook' =
   avoidStruts $
     setBorder 0 0 (named "Tab" (addTabs shrinkText tabTheme Simplest)) |||
-    setBorder 2 1 (magnifiercz 1.05 (
+    setBorder 2 1 (magnifier (
       tiled |||
       Mirror tiled |||
       Circle |||
