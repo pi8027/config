@@ -128,6 +128,37 @@ function _print_dirstack(){
 
 add-zsh-hook chpwd _print_dirstack
 
+# cdd
+
+function _set_tmuxpwd(){
+    if [ -n "$TMUX" ]; then
+        tmux setenv $(tmux display -p "TMUXPWD_#I") $PWD
+        tmux setenv $(tmux display -p "TMUXPWD_#I_#P") $PWD
+    fi
+}
+
+function cdd(){
+    if [ -n "$1" ]; then
+        if [ -n "$2" ]; then
+            name="TMUXPWD_${1}_${2}"
+        else
+            name="TMUXPWD_$1"
+        fi
+
+        dir=`tmux getenv $name`
+
+        if [ -d "$dir" ]; then
+            cd "$dir"
+        else
+            echo "error : cdd"
+        fi
+    else
+        echo "usage : cdd [window [pane]]"
+    fi
+}
+
+add-zsh-hook chpwd _set_tmuxpwd
+
 # make and change directory
 
 function mpd(){
