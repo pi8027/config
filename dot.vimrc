@@ -105,6 +105,10 @@ if exists("*strftime")
 	imap <C-D><C-W> <C-R>=W3CDTF()<CR>
 endif
 
+"""" Plugins
+
+call pathogen#runtime_append_all_bundles()
+
 """" Private Settings
 
 source ~/.vimrc.private
