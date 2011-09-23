@@ -30,41 +30,42 @@ cdpath=(~)
 
 homerep_sedscript="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
 
-# screen
-
-#if [ -z $STY ]; then
-#	screen
-#else
-#	function _update_screen_title() {
-#		echo -ne "\ek`pwd | sed -e $homerep_sedscript`% $1\e\\" #FIXME : $1
-#	}
-#    add-zsh-hook precmd _update_screen_title
-#fi
-
 # tmux
 
 if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
-    eval `ssh-agent`
-	tmux -u
-    kill $SSH_AGENT_PID
-    export SSH_AGENT_PID=
-    export SSH_AUTH_SOCK=
-	export WITHOUT_SCREEN=1
+    tmux
+    export WITHOUT_SCREEN=1
+else
+    function _update_title1(){
+        echo -ne "\ek$(pwd | sed -e $homerep_sedscript)% $1\e\\"
+    }
+
+    function _update_title2(){
+        echo -ne "\ek$(pwd | sed -e $homerep_sedscript)%\e\\"
+    }
+
+    function _tmux_alert(){
+        echo -n "\a"
+    }
+
+    add-zsh-hook preexec _update_title1
+    add-zsh-hook precmd _update_title2
+    add-zsh-hook precmd _tmux_alert
 fi
 
 # prompt
 
 if [ $TERM != "dumb" ]; then
-	PROMPT="%U%F{red}[%n@%M]%f%u(%j)%# "
-	PROMPT2="%F{red}%_%%%f "
-	SPROMPT="%F{red}%r is correct? [n,y,a,e]:%f "
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+    PROMPT="%U%F{red}[%n@%M]%f%u(%j)%# "
+    PROMPT2="%F{red}%_%%%f "
+    SPROMPT="%F{red}%r is correct? [n,y,a,e]:%f "
+    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
         PROMPT="%F{cyan}$(echo ${HOST%%.*} | tr "[a-z]" "[A-Z]") ${PROMPT}"
 else
-	PROMPT="%U[%n@%M]%u(%j)%# "
-	PROMPT2="%_%% "
-	SPROMPT="%r is correct? [n,y,a,e]: "
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+    PROMPT="%U[%n@%M]%u(%j)%# "
+    PROMPT2="%_%% "
+    SPROMPT="%r is correct? [n,y,a,e]: "
+    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
         PROMPT="$(echo ${HOST%%.*} | tr "[a-z]" "[A-Z]") ${PROMPT}"
 fi
 
@@ -105,9 +106,8 @@ LISTMAX=0
 
 # alias
 
-alias history-all="history -E 1"
+alias history-all="history -E 1 | less"
 alias ls="ls -F --color"
-alias less="less --quit-if-one-screen --raw-control-chars"
 alias emacs="emacs --no-window-system"
 alias gosh="rlwrap gosh"
 alias maxima="rlwrap maxima"
@@ -180,7 +180,7 @@ zstyle ":vcs_info:*" unstagedstr "-"
 zstyle ":vcs_info:*" formats "%R" "%b" "%S" "%c%u"
 zstyle ":vcs_info:*" actionformats "%R" "%b|%a" "%S" "%c%u"
 
-function vcd(){
+function cdv(){
     LANG=en_US.UTF-8 vcs_info
     if [ -n "$vcs_info_msg_0_" ]; then
         cd "$vcs_info_msg_0_/$1"
@@ -189,12 +189,12 @@ function vcd(){
     fi
 }
 
-function _vcd(){
+function _cdv(){
     LANG=en_US.UTF-8 vcs_info
     if [ -n "$vcs_info_msg_0_" ]; then
         _files -/ -W "$vcs_info_msg_0_"
     fi
 }
 
-compdef _vcd vcd
+compdef _cdv cdv
 
