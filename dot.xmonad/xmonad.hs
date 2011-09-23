@@ -31,13 +31,12 @@ import XMonad.Layout.Tabbed
 import XMonad.Prompt
 import XMonad.Prompt.Shell
 import XMonad.Prompt.Ssh
-import XMonad.Prompt.Window
 import XMonad.Util.NamedWindows
 import XMonad.Util.Run
 import XMonad.Util.WorkspaceCompare
 import qualified XMonad.StackSet as W
 
-import XMonad.Action.AngleFocus
+import XMonad.Actions.AngleFocus
 import XMonad.Layout.Border
 
 ------------------------------------------------------------------------
