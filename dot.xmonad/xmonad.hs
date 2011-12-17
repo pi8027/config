@@ -15,20 +15,23 @@ import System.IO
 import System.Directory
 
 import XMonad
+import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
+import XMonad.Actions.TopicSpace
+import XMonad.Actions.Submap
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Circle
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
-import XMonad.Layout.IndependentScreens
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Magnifier
 import XMonad.Layout.Named
 import XMonad.Layout.Simplest
 import XMonad.Layout.Tabbed
 import XMonad.Prompt
+import XMonad.Prompt.Input
 import XMonad.Prompt.Shell
 import XMonad.Prompt.Ssh
 import XMonad.Util.NamedWindows
@@ -39,21 +42,22 @@ import qualified XMonad.StackSet as W
 import XMonad.Actions.AngleFocus
 import XMonad.Layout.Border
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Theme
 --
 
-defaultFont :: String
-defaultFont = "-misc-fixed-medium-r-normal--12-*"
+defaultFont, defaultFontL :: String
+defaultFont = "-misc-fixed-medium-r-normal--10-*"
+defaultFontL = "-misc-fixed-medium-r-normal--20-*"
 
 promptTheme :: XPConfig
 promptTheme = XPC {
   font                = defaultFont,
-  bgColor             = "#4444ff",
-  fgColor             = "#000000",
-  fgHLight            = "#ffffff",
-  bgHLight            = "#000000",
-  borderColor         = "#4444ff",
+  bgColor             = "#33f",
+  fgColor             = "#000",
+  fgHLight            = "#fff",
+  bgHLight            = "#000",
+  borderColor         = "#44f",
   promptBorderWidth   = 0,
   promptKeymap        = defaultXPKeymap,
   completionKey       = xK_Tab,
@@ -67,56 +71,107 @@ promptTheme = XPC {
 
 tabTheme :: Theme
 tabTheme = Theme {
-  activeColor         = "#000",
+  activeColor         = "#fff",
   inactiveColor       = "#000",
   urgentColor         = "#ff0",
-  activeBorderColor   = "#fff",
-  inactiveBorderColor = "#333",
+  activeBorderColor   = "#000",
+  inactiveBorderColor = "#fff",
   urgentBorderColor   = "#0f0",
-  activeTextColor     = "#fff",
-  inactiveTextColor   = "#666",
+  activeTextColor     = "#000",
+  inactiveTextColor   = "#fff",
   urgentTextColor     = "#F00",
   fontName            = defaultFont,
   decoWidth           = 200,
-  decoHeight          = 12 }
+  decoHeight          = 14,
+  windowTitleAddons   = [],
+  windowTitleIcons    = [] }
 
 gsConfig :: HasColorizer a => GSConfig a
 gsConfig = GSConfig {
-  gs_cellheight = 30,
+  gs_cellheight = 40,
   gs_cellwidth = 240,
   gs_cellpadding = 10,
   gs_colorizer = defaultColorizer,
-  gs_font = defaultFont,
-  gs_navigate = M.fromList [
-    ((0, xK_h), \(x, y) -> (x-1, y)),
-    ((0, xK_t), \(x, y) -> (x, y+1)),
-    ((0, xK_n), \(x, y) -> (x, y-1)),
-    ((0, xK_s), \(x, y) -> (x+1, y)),
-    ((0, xK_space), const (0, 0)) ],
+  gs_font = defaultFontL,
+  gs_navigate = gsNavigation,
   gs_originFractX = 1/2,
   gs_originFractY = 1/2 }
 
-wsgrid = ask >>=
-  gridselect gsConfig { gs_cellheight = 50, gs_cellwidth = 100 , gs_cellpadding = 45 } .
-  map (join (,)) . workspaces . config
+gsNavigation :: TwoD a (Maybe a)
+gsNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap $ const gsNavigation
+  where
+  navKeyMap = M.fromList [
+     ((0,           xK_Escape), cancel),
+     ((controlMask, xK_m     ), select),
+     ((0,           xK_Return), select),
+     ((0,           xK_slash ), substringSearch gsNavigation),
+     ((0,           xK_h     ), move (-1,0) >> gsNavigation),
+     ((0,           xK_t     ), move (0,1) >> gsNavigation),
+     ((0,           xK_n     ), move (0,-1) >> gsNavigation),
+     ((0,           xK_s     ), move (1,0) >> gsNavigation),
+     ((0,           xK_Tab   ), moveNext >> gsNavigation),
+     ((shiftMask,   xK_Tab   ), movePrev >> gsNavigation)]
 
-------------------------------------------------------------------------
+wsgrid = do
+  workspaceList >>= gridselect gsConfig' . map (join (,))
+  where
+  gsConfig' = gsConfig {
+    gs_cellwidth = 100,
+    gs_cellpadding = 30 }
+
+--------------------------------------------------------------------------------
+-- Topic Space
+--
+
+topics :: [Topic]
+topics = ["work", "web", "im", "pdf"]
+
+topicConfig :: TopicConfig
+topicConfig = TopicConfig {
+  topicDirs = M.fromList [],
+  defaultTopicAction = const $ return (),
+  defaultTopic = "work",
+  maxTopicHistory = 4,
+  topicActions = M.fromList [] }
+
+--------------------------------------------------------------------------------
+-- Workspace
+--
+
+workspaceList :: X [WorkspaceId]
+workspaceList = gets $
+  (\(W.StackSet c v h _) ->
+    map W.tag (h ++ map W.workspace (c : v))) . windowset
+
+addWorkspacePrompt :: XPConfig -> X ()
+addWorkspacePrompt c = do
+  ws <- workspaceList
+  name' <- inputPrompt c "add workspace"
+  case name' of
+    Just name | name `notElem` ws && not (null name) -> addWorkspace name
+    _ -> return ()
+
+--------------------------------------------------------------------------------
 -- Key bindings
 --
 
-keys' :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
-keys' conf = M.fromList $ [
+keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
   -- launcher
   ((modm,   xK_Return    ), spawn $ XMonad.terminal conf),
   ((smodm,  xK_Return    ), spawn "emacs"),
   ((modm,   xK_semicolon ), shellPrompt promptTheme),
+  ((modm,   xK_q         ),
+    submap . M.fromList $ [
+      ((0, xK_semicolon), spawn "xlock -bg black -fg white"),
+      ((0, xK_q        ), spawn "xrandr --output LVDS1 --off"),
+      ((0, xK_j        ), spawn "xrandr --output LVDS1 --auto")]),
   -- prompt
   ((smodm,  xK_semicolon ), sshPrompt promptTheme),
   -- Kill focused window
   ((smodm,  xK_c         ), kill),
   -- Change layout
   ((modm,   xK_space     ), sendMessage NextLayout),
-  ((smodm,  xK_space     ), setLayout $ XMonad.layoutHook conf),
+  ((smodm,  xK_space     ), setLayout $ layoutHook conf),
   -- Resize viewed windows to the correct size
   ((modm,   xK_quoteleft ), refresh),
   -- move focus
@@ -140,7 +195,7 @@ keys' conf = M.fromList $ [
   ((cmodm,  xK_v         ), sendMessage MagnifyLess),
   ((cmodm,  xK_m         ), sendMessage Toggle),
   -- toggle xmobar
-  ((cmodm,  xK_z         ), sendMessage ToggleStruts),
+  ((modm,   xK_z         ), sendMessage ToggleStruts),
   -- Shrink the master area
   ((modm,   xK_comma     ), sendMessage Shrink),
   -- Expand the master area
@@ -151,25 +206,34 @@ keys' conf = M.fromList $ [
   ((smodm,  xK_period    ), sendMessage (IncMasterN (-1))),
   -- Push window back into tiling
   ((smodm,  xK_quoteleft ), withFocused $ windows . W.sink),
-  -- Grid select
---  ((modm,   xK_g         ), goToSelected gsConfig),
-  ((modm,   xK_z         ), wsgrid >>= maybe (return ()) (windows . W.greedyView)),
-  ((smodm,  xK_z         ), wsgrid >>= maybe (return ()) (windows . W.shift)),
+  -- Workspace
+  ((modm,   xK_u         ), wsgrid >>= maybe (return ()) (windows . W.greedyView)),
+  ((smodm,  xK_u         ), wsgrid >>= maybe (return ()) (windows . W.shift)),
+  ((modm,   xK_i         ), Main.addWorkspacePrompt promptTheme),
+  ((smodm,  xK_i         ), removeWorkspace),
   -- (Quit|Restart) xmonad
   ((scmodm, xK_quoteright), io $ exitWith ExitSuccess),
-  ((modm,   xK_quoteright), spawn "xmonad --restart"),
-  -- reset xrandr
-  ((modm,   xK_x         ), spawn "xrandr --output LVDS1 --off"),
-  ((smodm,  xK_x         ), spawn "xrandr --output LVDS1 --auto")]
+  ((modm,   xK_quoteright), do
+    spawn "killall trayer"
+    spawn "xmonad --restart")]
+
   ++
 
-  [((m .|. modm, k), windows s)
-    | (i, k) <- zip (workspaces conf) numsyms
-    , (s, m) <- [(W.greedyView i, 0), (W.shift i, shiftMask)]]
+--  [((modm .|. m, k), f i)
+--    | (i, k) <- zip [1..] numsyms
+--    , (f, m) <- [
+--        (switchNthLastFocused topicConfig, 0),
+--        (shiftNthLastFocused, shiftMask)]]
+--  ++
+
+  [((modm .|. m, k), windows $ f n) |
+    (n, k) <- zip topics numsyms,
+    (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+
   ++
 
-  [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-    | (key, sc) <- zip [xK_a, xK_o, xK_e] [0..]
+  [((modm .|. m, k), screenWorkspace s >>= flip whenJust (windows . f))
+    | (s, k) <- zip [0..] [xK_a, xK_o, xK_e]
     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
   where
@@ -182,73 +246,69 @@ keys' conf = M.fromList $ [
   numsyms = [xK_exclam, xK_at, xK_numbersign, xK_dollar, xK_percent,
     xK_asciicircum, xK_ampersand, xK_asterisk, xK_parenleft, xK_parenright]
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Mouse bindings
 --
 
 mouseBindings' :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
-mouseBindings' (XConfig {XMonad.modMask = modm}) = M.fromList [
+mouseBindings' _ = M.empty
 
-  -- mod-button1, Set the window to floating mode and move by dragging
-  ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster),
-
-  -- mod-button2, Raise the window to the top of the stack
-  ((modm, button2), \w -> focus w >> windows W.shiftMaster),
-
-  -- mod-button3, Set the window to floating mode and resize by dragging
-  ((modm, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)]
-
-  -- you may also bind events to the mouse scroll wheel (button4 and button5)
-
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Layouts
 --
 
 layoutHook' =
   avoidStruts $
-    setBorder 0 0 (named "Tab" (addTabs shrinkText tabTheme Simplest)) |||
+    setBorder 0 0 (named "Tab" tabbed) |||
     setBorder 2 1 (magnifier (
       tiled |||
       Mirror tiled |||
-      Circle |||
-      named "IM" (withIM (1%6) (ClassName "Skype") Grid)))
+      Grid |||
+      Circle)) |||
+    named "IM" (setBorder 1 1
+      (withIM (1%5) (ClassName "Skype") (setBorder 0 0 tabbed ||| Grid)))
 
   where
 
-  tiled = Tall 1 (3/100) (2/3)
+  tiled = Tall 1 (3/100) (1/2)
+  tabbed = addTabs shrinkText tabTheme Simplest
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Window rules
 --
 
 manageHook' :: ManageHook
 manageHook' = composeAll [
+  resource  =? "desktop_window" --> doIgnore,
+  resource  =? "kdesktop"       --> doIgnore,
   className =? "MPlayer"        --> doFloat,
   className =? "Gimp"           --> doFloat,
-  resource  =? "desktop_window" --> doIgnore,
-  resource  =? "kdesktop"       --> doIgnore ]
+  className =? "Skype"          -->
+    doF (W.modify' rotateUp . W.view "im" . W.shift "im")]
   <+> manageDocks
+  where
+  rotateUp (W.Stack t [] rs) = W.Stack t (reverse rs) []
+  rotateUp (W.Stack t ls rs) = W.Stack t (init ls) (rs ++ [last ls])
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Event handling
 --
 
 handleEventHook' :: Event -> X All
 handleEventHook' = mempty
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Status bars and logging
---
 
-logHook' :: ScreenId -> Handle -> X ()
-logHook' n h = dynamicLogWithPP PP {
-  ppCurrent         = xmobarColor "#f33" "" . wrap "[" "]",
+logHook' :: Handle -> X ()
+logHook' h = dynamicLogWithPP PP {
+  ppCurrent         = xmobarColor "#f33" "",
   ppVisible         = xmobarColor "#cc0" "",
   ppHidden          = id,
   ppHiddenNoWindows = xmobarColor "#666" "",
   ppUrgent          = xmobarColor "#f33" "#ff0",
   ppSep             = wrap " " " " $ xmobarColor "" "#fff" " ",
-  ppWsSep           = "",
+  ppWsSep           = " ",
   ppTitle           = xmobarColor "#0f0" "" . shorten 60,
   ppLayout          = id,
   ppOrder           = id,
@@ -256,55 +316,29 @@ logHook' n h = dynamicLogWithPP PP {
   ppExtras          = [],
   ppOutput          = hPutStrLn h }
 
-  where
-
-  sepBy :: String -> [String] -> String
-  sepBy sep = intercalate sep . filter (not . null)
-
-  dynamicLogWithPP :: PP -> X ()
-  dynamicLogWithPP pp = dynamicLogString pp >>= io . ppOutput pp
-  
-  dynamicLogString :: PP -> X String
-  dynamicLogString pp = do
-    winset <- screenWorkspace n >>=
-      maybe (gets windowset) ((<$> gets windowset) . W.view)
-    urgents <- readUrgents
-    sort' <- ppSort pp
-    let ld = description . W.layout . W.workspace . W.current $ winset
-    let ws = pprWindowSet sort' urgents pp winset
-    wt <- maybe (return "") (fmap show . getName) . W.peek $ winset
-    extras <- mapM (`catchX` return Nothing) $ ppExtras pp
-    return $ encodeOutput . sepBy (ppSep pp) . ppOrder pp $
-      [ ws
-      , ppLayout pp ld
-      , ppTitle  pp wt
-      ]
-      ++ catMaybes extras
-
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Startup hook
 --
 
 startupHook' :: X ()
 startupHook' = return ()
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Run XMonad
 --
 
 main :: IO ()
 main = do
-  xmobars <- countScreens >>=
-    mapM (\n -> (,) (S n) <$> spawnPipe ("xmobar -x " ++ show n)) .
-    (\n -> [0 .. n-1])
+  xmobarHandle <- spawnPipe "xmobar"
+  spawn "trayer --edge top --align right --width 10 --height 10 \
+    \--transparent true --tint gray --padding 0 --distance -2"
   xmonad XConfig {
     -- simple stuff
     terminal           = "urxvt",
     focusFollowsMouse  = False,
     borderWidth        = 0,
     modMask            = mod4Mask,
-    numlockMask        = mod2Mask,
-    workspaces         = [[c] | c <- ['1'..'9']],
+    workspaces         = topics,
     normalBorderColor  = "#666",
     focusedBorderColor = "#f33",
     -- key bindings
@@ -314,6 +348,6 @@ main = do
     layoutHook         = layoutHook',
     manageHook         = manageHook',
     handleEventHook    = handleEventHook',
-    logHook            = mapM_ (uncurry logHook') xmobars,
+    logHook            = logHook' xmobarHandle,
     startupHook        = startupHook' }
 
