@@ -1,10 +1,10 @@
 Config
-  { font = "-misc-fixed-medium-r-normal--10-*"
+  { font = "-misc-fixed-medium-r-normal--10-*-"
   , bgColor = "#000"
   , fgColor = "#fff"
   , border = NoBorder
   , borderColor = "white"
-  , position = Top
+  , position = TopW L 90
   , lowerOnStart = True
   , commands =
     [ Run StdinReader
