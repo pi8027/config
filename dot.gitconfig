@@ -3,13 +3,15 @@
     editor = vim
 
 [user]
-    name = kazuhiko Sakaguchi
+    name = Kazuhiko Sakaguchi
     email = pi8027@gmail.com
 
 [alias]
     lol = log --graph --decorate --abbrev-commit --pretty=oneline
     lola = log --graph --decorate --abbrev-commit --pretty=oneline --all
     lolv = log --graph --all --color --pretty='%x09%C(yellow)%h %Cgreen%ci %Cblue%cn%x09%Creset%s %Cred%d%Creset'
+    wdiff = diff --color-words
+    wshow = show --color-words
 
 [color]
-	ui = true
+    ui = true
