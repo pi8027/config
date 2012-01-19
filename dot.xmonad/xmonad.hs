@@ -8,6 +8,7 @@ import Data.List
 import Data.Ratio
 import Data.Monoid
 import qualified Data.Map as M
+import Data.Time
 import Control.Applicative
 import Control.Monad
 import System.Exit
@@ -152,6 +153,27 @@ addWorkspacePrompt c = do
     _ -> return ()
 
 --------------------------------------------------------------------------------
+-- Screen Snapshot
+--
+
+sshot :: String -> X ()
+sshot window = do
+    ZonedTime (LocalTime day time) _ <- io getZonedTime
+    let dir = "ss/" ++ showGregorian day ++ "/"
+        filepath = dir ++ show time ++ ".png"
+    io $ (doesDirectoryExist dir >>= (`unless` createDirectory dir))
+    spawn $ "import -window " ++ window ++ " " ++ filepath ++
+        " && chromium ~/" ++ filepath
+
+sshotCurrent :: X ()
+sshotCurrent =
+    gets (fmap W.focus . W.stack . W.workspace . W.current . windowset) >>=
+        maybe (return ()) (sshot . show)
+
+sshotRoot :: X ()
+sshotRoot = sshot "root"
+
+--------------------------------------------------------------------------------
 -- Key bindings
 --
 
@@ -165,6 +187,10 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
       ((0, xK_semicolon), spawn "xlock -bg black -fg white"),
       ((0, xK_q        ), spawn "xrandr --output LVDS1 --off"),
       ((0, xK_j        ), spawn "xrandr --output LVDS1 --auto")]),
+  ((modm,   xK_j         ),
+    submap . M.fromList $ [
+      ((0, xK_semicolon), sshotCurrent),
+      ((0, xK_q        ), sshotRoot)]),
   -- prompt
   ((smodm,  xK_semicolon ), sshPrompt promptTheme),
   -- Kill focused window
