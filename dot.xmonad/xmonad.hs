@@ -239,9 +239,7 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
   ((smodm,  xK_i         ), removeWorkspace),
   -- (Quit|Restart) xmonad
   ((scmodm, xK_quoteright), io $ exitWith ExitSuccess),
-  ((modm,   xK_quoteright), do
-    spawn "killall trayer"
-    spawn "xmonad --restart")]
+  ((modm,   xK_quoteright), spawn "killall trayer && xmonad --restart")]
 
   ++
 
