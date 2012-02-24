@@ -157,21 +157,24 @@ addWorkspacePrompt c = do
 --
 
 sshot :: String -> X ()
-sshot window = do
+sshot option = do
     ZonedTime (LocalTime day time) _ <- io getZonedTime
     let dir = "ss/" ++ showGregorian day ++ "/"
         filepath = dir ++ show time ++ ".png"
     io $ (doesDirectoryExist dir >>= (`unless` createDirectory dir))
-    spawn $ "import -window " ++ window ++ " " ++ filepath ++
+    spawn $ "import " ++ option ++ " " ++ filepath ++
         " && chromium ~/" ++ filepath
 
 sshotCurrent :: X ()
 sshotCurrent =
     gets (fmap W.focus . W.stack . W.workspace . W.current . windowset) >>=
-        maybe (return ()) (sshot . show)
+        maybe (return ()) (sshot . ("-window " ++) . show)
 
 sshotRoot :: X ()
-sshotRoot = sshot "root"
+sshotRoot = sshot "-window root"
+
+sshotSelect :: X ()
+sshotSelect = sshot ""
 
 --------------------------------------------------------------------------------
 -- Key bindings
@@ -190,7 +193,8 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
   ((modm,   xK_j         ),
     submap . M.fromList $ [
       ((0, xK_semicolon), sshotCurrent),
-      ((0, xK_q        ), sshotRoot)]),
+      ((0, xK_q        ), sshotRoot),
+      ((0, xK_j        ), sshotSelect)]),
   -- prompt
   ((smodm,  xK_semicolon ), sshPrompt promptTheme),
   -- Kill focused window
