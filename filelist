@@ -12,6 +12,7 @@
 .xmobarrc
 .xmonad
 .xsession
+.zsh
 .zshrc
 .zshenv
 .zlogin

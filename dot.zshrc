@@ -29,7 +29,7 @@ cdpath=(~)
 
 # sed scripts
 
-homerep_sedscript="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
+sedscript_replace_home="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
 
 # tmux
 
@@ -38,11 +38,11 @@ if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
     export WITHOUT_SCREEN=1
 else
     function _update_title1(){
-        echo -ne "\ek$(pwd | sed -e $homerep_sedscript)% $1\e\\"
+        echo -ne "\ek$(pwd | sed -e $sedscript_replace_home)% $1\e\\"
     }
 
     function _update_title2(){
-        echo -ne "\ek$(pwd | sed -e $homerep_sedscript)%\e\\"
+        echo -ne "\ek$(pwd | sed -e $sedscript_replace_home)%\e\\"
     }
 
     function _tmux_alert(){
@@ -52,6 +52,8 @@ else
     add-zsh-hook preexec _update_title1
     add-zsh-hook precmd _update_title2
     add-zsh-hook precmd _tmux_alert
+
+    source ~/.zsh/nw.zsh
 fi
 
 # prompt
@@ -70,10 +72,10 @@ else
         PROMPT="$(echo ${HOST%%.*} | tr "[a-z]" "[A-Z]") ${PROMPT}"
 fi
 
-function _update_rprompt() {
+function _update_rprompt(){
     LANG=en_US.UTF-8 vcs_info
     if [ -n "$vcs_info_msg_0_" ]; then
-        psvar=(`echo "$vcs_info_msg_0_" | sed -e $homerep_sedscript`
+        psvar=(`echo "$vcs_info_msg_0_" | sed -e $sedscript_replace_home`
             "$vcs_info_msg_1_" "$vcs_info_msg_2_" "$vcs_info_msg_3_")
         [[ -n $psvar[4] ]] && psvar[4]=" "$psvar[4]
         RPROMPT="%F{green}[%1v:%2v] %F{red}%3v%f%4v"
@@ -137,6 +139,7 @@ function _set_tmuxpwd(){
 }
 
 function cdd(){
+    local name dir
     if [ -n "$1" ]; then
         if [ -n "$2" ]; then
             name="TMUXPWD_$1_$2"
