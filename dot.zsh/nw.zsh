@@ -1,4 +1,5 @@
-function nw(){
+
+nw(){
     local CMDNAME split_opts spawn_command
     CMDNAME=`basename $0`
 
@@ -19,10 +20,10 @@ function nw(){
     spawn_command=$@
     [[ -z $spawn_command ]] && spawn_command=$SHELL
 
-    tmux split-window `echo -n $split_opts` "$spawn_command"
+    tmux split-window `echo -n $split_opts` "cd $PWD ; $spawn_command"
 }
 
-function _nw(){
+_nw(){
     local args
     args=(
         '-d[do not make the new window become the active one]'
@@ -37,3 +38,4 @@ function _nw(){
 }
 
 compdef _nw nw
+
