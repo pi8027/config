@@ -37,15 +37,15 @@ if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
     tmux
     export WITHOUT_SCREEN=1
 else
-    function _update_title1(){
+    _update_title1(){
         echo -ne "\ek$(pwd | sed -e $sedscript_replace_home)% $1\e\\"
     }
 
-    function _update_title2(){
+    _update_title2(){
         echo -ne "\ek$(pwd | sed -e $sedscript_replace_home)%\e\\"
     }
 
-    function _tmux_alert(){
+    _tmux_alert(){
         echo -n "\a"
     }
 
@@ -72,7 +72,7 @@ else
         PROMPT="$(echo ${HOST%%.*} | tr "[a-z]" "[A-Z]") ${PROMPT}"
 fi
 
-function _update_rprompt(){
+_update_rprompt(){
     LANG=en_US.UTF-8 vcs_info
     if [ -n "$vcs_info_msg_0_" ]; then
         psvar=(`echo "$vcs_info_msg_0_" | sed -e $sedscript_replace_home`
@@ -123,7 +123,7 @@ alias google="w3m http://google.com/"
 alias pd="popd"
 alias dirs="dirs -v"
 
-function _print_dirstack(){
+_print_dirstack(){
     dirs
 }
 
@@ -131,14 +131,14 @@ add-zsh-hook chpwd _print_dirstack
 
 # cdd
 
-function _set_tmuxpwd(){
+_set_tmuxpwd(){
     if [ -n "$TMUX" ]; then
         tmux setenv $(tmux display -p "TMUXPWD_#I") $PWD
         tmux setenv $(tmux display -p "TMUXPWD_#I_#P") $PWD
     fi
 }
 
-function cdd(){
+cdd(){
     local name dir
     if [ -n "$1" ]; then
         if [ -n "$2" ]; then
@@ -163,12 +163,12 @@ add-zsh-hook chpwd _set_tmuxpwd
 
 # make and change directory
 
-function mpd(){
+mpd(){
     mkdir -p $1
     cd $1
 }
 
-function daypd(){
+daypd(){
     mpd `date "+%Y-%m-%d"`
 }
 
@@ -182,7 +182,7 @@ zstyle ":vcs_info:*" unstagedstr "-"
 zstyle ":vcs_info:*" formats "%R" "%b" "%S" "%c%u"
 zstyle ":vcs_info:*" actionformats "%R" "%b|%a" "%S" "%c%u"
 
-function cdv(){
+cdv(){
     LANG=en_US.UTF-8 vcs_info
     if [ -n "$vcs_info_msg_0_" ]; then
         cd "$vcs_info_msg_0_/$1"
@@ -191,7 +191,7 @@ function cdv(){
     fi
 }
 
-function _cdv(){
+_cdv(){
     LANG=en_US.UTF-8 vcs_info
     if [ -n "$vcs_info_msg_0_" ]; then
         _files -/ -W "$vcs_info_msg_0_"
