@@ -147,7 +147,7 @@ cdd(){
             name="TMUXPWD_$1"
         fi
 
-        dir=`tmux show-environment -n $name`
+        dir=`tmux show-environment $name`
 
         if [ -d "$dir" ]; then
             cd "$dir"
