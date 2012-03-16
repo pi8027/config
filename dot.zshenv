@@ -9,3 +9,7 @@ export LESS="--raw-control-chars"
 path=($HOME/bin(N-/) $HOME/.cabal/bin(N-/) $path)
 
 source ~/.zshenv.local
+
+if which vim > /dev/null ; then
+    EDITOR=vim
+fi

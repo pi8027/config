@@ -117,6 +117,8 @@ alias coqtop="rlwrap coqtop"
 alias gs="rlwrap gs"
 alias hoogle="hoogle --color=true"
 alias google="w3m http://google.com/"
+alias xclipin="xclip -i -selection clipboard"
+alias xclipout="xclip -o -selection clipboard"
 
 # directory stack
 
@@ -200,3 +202,11 @@ _cdv(){
 
 compdef _cdv cdv
 
+# xclip editor
+
+xclipedit(){
+    file=`tempfile`
+    xclipout > file
+    $EDITOR file
+    cat file | xclipin
+}
