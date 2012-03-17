@@ -33,10 +33,10 @@ sedscript_replace_home="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
 
 # tmux
 
-if [ -z $TMUX ] && [ -z $WITHOUT_SCREEN ] && [ $TERM != "screen" ]; then
+if [ -z $TMUX ] && [ -z $WITHOUT_TMUX ] && [ $TERM != "screen" ]; then
     tmux
-    export WITHOUT_SCREEN=1
-else
+    export WITHOUT_TMUX=1
+elif printenv TMUX > /dev/null ; then
     _update_title1(){
         echo -ne "\ek$(pwd | sed -e $sedscript_replace_home)% $1\e\\"
     }
@@ -206,7 +206,21 @@ compdef _cdv cdv
 
 xclipedit(){
     file=`tempfile`
-    xclipout > file
-    $EDITOR file
-    cat file | xclipin
+    xclipout > $file
+    $EDITOR $file
+    cat $file | xclipin
+    rm $file
+}
+
+# tmux and xclip
+
+tmux-loadxclip(){
+    file=`tempfile`
+    xclipout > $file
+    tmux load-buffer $@ $file
+    rm $file
+}
+
+tmux-storexclip(){
+    tmux show-buffer -p $@ | xclipin
 }
