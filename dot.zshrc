@@ -222,5 +222,6 @@ tmux-loadxclip(){
 }
 
 tmux-storexclip(){
-    tmux show-buffer -p $@ | xclipin
+    tmux show-buffer -r $@ | xclipin
 }
+
