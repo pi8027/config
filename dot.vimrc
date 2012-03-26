@@ -68,7 +68,7 @@ let &statusline .= '  %-14.(%l,%c%V%) %P '
 
 inoremap <C-C> <NOP>
 
-vnoremap <C-Y> !pbcopy<C-M><C-M>u
+"vnoremap <C-Y> !pbcopy<C-M><C-M>u
 
 """" Swap and Backup Files
 
@@ -90,10 +90,17 @@ let hs_highlight_debug = 1
 
 """" Dvorak Key Mapping
 
-noremap h h
+"noremap h h
 noremap t j
 noremap n k
 noremap s l
+"noremap H H
+noremap S L
+
+noremap j n
+noremap J N
+noremap k t
+noremap K T
 
 """" Date and Time
 
