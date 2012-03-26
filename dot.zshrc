@@ -99,7 +99,7 @@ setopt extended_history
 setopt share_history
 setopt hist_ignore_all_dups
 
-# comp
+# completion
 
 zstyle ":completion:*" list-colors ${(s.:.)LS_COLORS}
 zstyle ":completion:*:sudo:*" command-path \
@@ -204,24 +204,21 @@ compdef _cdv cdv
 
 # xclip editor
 
-xclipedit(){
+clipedit(){
     file=`tempfile`
-    xclipout > $file
+    clipboardout > $file
     $EDITOR $file
-    cat $file | xclipin
+    cat $file | clipboardin
     rm $file
 }
 
 # tmux and xclip
 
-tmux-loadxclip(){
-    file=`tempfile`
-    xclipout > $file
-    tmux load-buffer $@ $file
-    rm $file
+tmux-loadcb(){
+    clipboardout | tmux load-buffer $@ -
 }
 
-tmux-storexclip(){
-    tmux show-buffer -r $@ | xclipin
+tmux-storecb(){
+    tmux save-buffer $@ - | clipboardin
 }
 
