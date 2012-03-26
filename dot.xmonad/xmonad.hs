@@ -117,7 +117,7 @@ wsgrid = do
   workspaceList >>= gridselect gsConfig' . map (join (,))
   where
   gsConfig' = gsConfig {
-    gs_cellwidth = 100,
+    gs_cellwidth = 150,
     gs_cellpadding = 30 }
 
 --------------------------------------------------------------------------------
