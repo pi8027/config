@@ -88,7 +88,7 @@ add-zsh-hook precmd _update_rprompt
 
 # zle
 
-#bindkey -v
+bindkey -e
 
 # history
 
