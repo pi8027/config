@@ -1,7 +1,29 @@
 #!/bin/bash
 
-for file in `ls -1 | grep -v "^\(gen-symlinks\)$"` ; do
-    rm ~/.$file
-    ln -s $PWD/$file ~/.$file
-done
+files=`cat <<EOT
+Xmodmap
+Xresources
+emacs.d
+ghci
+gitconfig
+mlterm
+screenrc
+skk
+tmux.conf
+vim
+vimperator
+vimperatorrc
+vimrc
+xmobarrc
+xmonad
+xsession
+zlogin
+zsh
+zshenv
+zshrc
+EOT`
 
+for f in $files ; do
+    rm ~/.$f
+    ln -f -s $PWD/$f ~/.$f
+done
