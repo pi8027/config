@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for file in `ls -1 | grep -v "^\(gen-symlinks\)$"` ; do
+    rm ~/.$file
+    ln -s $PWD/$file ~/.$file
+done
+
