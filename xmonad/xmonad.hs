@@ -99,7 +99,8 @@ gsConfig = GSConfig {
   gs_originFractY = 1/2 }
 
 gsNavigation :: TwoD a (Maybe a)
-gsNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap $ const gsNavigation
+gsNavigation =
+  makeXEventhandler $ shadowWithKeymap navKeyMap $ const gsNavigation
   where
   navKeyMap = M.fromList [
      ((0,           xK_Escape), cancel),
@@ -237,13 +238,14 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
   -- Push window back into tiling
   ((smodm,  xK_quoteleft ), withFocused $ windows . W.sink),
   -- Workspace
-  ((modm,   xK_u         ), wsgrid >>= maybe (return ()) (windows . W.greedyView)),
+  ((modm,   xK_u         ),
+    wsgrid >>= maybe (return ()) (windows . W.greedyView)),
   ((smodm,  xK_u         ), wsgrid >>= maybe (return ()) (windows . W.shift)),
   ((modm,   xK_i         ), Main.addWorkspacePrompt promptTheme),
   ((smodm,  xK_i         ), removeWorkspace),
   -- (Quit|Restart) xmonad
   ((scmodm, xK_quoteright), io $ exitWith ExitSuccess),
-  ((modm,   xK_quoteright), spawn "killall trayer && xmonad --restart")]
+  ((modm,   xK_quoteright), spawn "killall trayer ; xmonad --restart")]
 
   ++
 
