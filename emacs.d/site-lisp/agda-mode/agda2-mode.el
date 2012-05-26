@@ -26,6 +26,7 @@ library is used (see `agda2-ghci-options').")
 (require 'agda2-highlight)
 (require 'agda2-abbrevs)
 (require 'haskell-ghci)
+(setq haskell-ghci-program-name "agda2-mode")
 ;; due to a bug in haskell-mode-2.1
 (setq haskell-ghci-mode-map (copy-keymap comint-mode-map))
 ;; Load filladapt, if it is installed.
