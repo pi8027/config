@@ -111,6 +111,7 @@ LISTMAX=0
 
 alias history-all="history -E 1 | less"
 alias ls="ls -F --color"
+alias less="less -r -M"
 alias emacs="emacs --no-window-system"
 alias gosh="rlwrap gosh"
 alias coqtop="rlwrap coqtop"
