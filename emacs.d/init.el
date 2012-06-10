@@ -1,9 +1,11 @@
 
+;;;; language, encoding
+
 (set-language-environment 'Japanese)
 
 (prefer-coding-system 'utf-8)
 
-;; path
+;;;; path
 
 (defun add-load-paths (paths)
   (if (null paths)
@@ -22,24 +24,21 @@
       "/opt/local/share/emacs/site-lisp"
       "/opt/local/share/emacs/23.2/site-lisp"))
 
-;; key binding
-
-(if (eq window-system 'x)
-    (progn
-     (define-key function-key-map [backspace] [8])
-     (put 'backspace 'ascii-character 8)
-    ))
+;;;; key binding
 
 (global-set-key "\C-h" 'backward-delete-char)
-
 (global-set-key "\177" 'backward-delete-char)
 
-;; tab
+;;;; tab
 
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 
-;; view
+;;;; backup
+
+(setq backup-inhibited t)
+
+;;;; view
 
 (setq frame-title-format "GNU Emacs")
 
@@ -47,7 +46,9 @@
 (tool-bar-mode 0)
 
 (global-linum-mode t)
-;(setq linum-format "%d ")
+;; (if (eq window-system nil)
+;;   (setq linum-format "%d ")
+;;   (setq linum-format "%d"))
 
 (show-paren-mode 1)
 
@@ -57,16 +58,7 @@
 	(set-scroll-bar-mode nil))
 (setq scroll-step 5)
 
-;; backup
-
-(setq backup-inhibited t)
-
-;; viper-mode
-
-;(setq viper-mode t)
-;(require 'viper)
-
-;; color
+;;;; color
 
 (defun color-theme-pi8027 ()
   "pi8027's theme"
@@ -92,7 +84,7 @@
 (color-theme-initialize)
 (color-theme-pi8027)
 
-;; font
+;;;; font
 
 (cond ((eq window-system 'ns)
 	   (progn
@@ -115,16 +107,16 @@
 		 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("M+ 2m" . "iso10646-1"))
 		 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("M+ 2m" . "iso10646-1")))))
 
-;; auto-complete.el
+;;;; auto-complete.el
 
 (require 'auto-complete)
 (global-auto-complete-mode t)
 
-;; ddskk
+;;;; ddskk
 
 (autoload 'skk-mode "skk" nil t)
 (global-set-key "\C-x\C-j" 'skk-mode)
-;(global-set-key "\C-xj" 'skk-auto-fill-mode)
+(global-set-key "\C-xj" 'skk-auto-fill-mode)
 (setq skk-server-host "localhost")
 (setq skk-server-port 1178)
 ;(setq skk-large-jisyo "~/.skk/SKK-JISYO.L")
@@ -141,41 +133,44 @@
                          skk-isearch-mode-enable)
                 (skk-isearch-mode-cleanup))))
 
-;; yatex
+;;;; yatex
 
+(require 'yatex)
 (setq auto-mode-alist (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
-(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
-
 (setq YaTeX-kanji-code 4)
-
 (setq YaTeX-fill-column 100)
 
-;; gauche
+;;;; gauche
 
+(require 'cmuscheme)
 (setq scheme-program-name "gosh -i")
-(autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
-(autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
 
-;; haskell-mode
+;;;; haskell-mode
 
-(load "haskell-site-file")
+(require 'haskell-mode)
 
-;; agda-mode
+;;;; agda-mode
 
-(load "agda2-mode")
+(require 'agda2-mode)
 
 (setq agda2-include-dirs '("" "/home/pi8027/lib/agda/"))
 
 (add-hook 'agda2-mode-hook
     (function (lambda () (add-to-list 'agda2-ghci-options "+RTS -M2G -K1G -RTS"))))
 
-;; proof general
+;;;; proof general
 
-(load "proof-site")
+(require 'coq)
+(setq coq-load-path '("."))
 
-;; sdic-mode
+;;;; gdb
 
-(autoload 'sdic "sdic" t nil)
+(setq gdb-many-windows t)
+(setq gdb-use-separate-io-buffer t)
+
+;;;; sdic-mode
+
+(require 'sdic)
 
 (global-set-key "\C-cw" 'sdic-describe-word)
 
@@ -187,7 +182,7 @@
 (setq sdic-eiwa-dictionary-list '((sdicf-client "/usr/share/dict/eijiro.sdic")))
 (setq sdic-waei-dictionary-list '((sdicf-client "/usr/share/dict/waeijiro.sdic")))
 
-;; ielm
+;;;; ielm
 
 (defun ielm-auto-complete ()
   "Enables `auto-complete' support in \\[ielm]."
@@ -200,6 +195,7 @@
   (auto-complete-mode 1))
 (add-hook 'ielm-mode-hook 'ielm-auto-complete)
 
-;; w3m
+;;;; w3m
 
 (require 'w3m-load)
+(setq w3m-home-page "http://google.com/")
