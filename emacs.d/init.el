@@ -31,8 +31,8 @@
 
 ;;;; tab
 
-(setq-default tab-width 4)
-(setq-default indent-tabs-mode nil)
+(setq tab-width 4)
+(setq indent-tabs-mode nil)
 
 ;;;; backup
 
@@ -86,7 +86,13 @@
 
 ;;;; font
 
-(cond ((eq window-system 'ns)
+(cond ((eq window-system 'x)
+	   (progn
+		 (set-face-attribute 'default nil :family "Terminus" :height 80)
+		 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("M+ 2m" . "iso10646-1"))
+		 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("M+ 2m" . "iso10646-1"))
+		 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("M+ 2m" . "iso10646-1"))))
+      ((eq window-system 'ns)
 	   (progn
 		 (set-face-attribute 'default nil :family "Monaco" :height 100)
 		 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("Osaka" . "iso10646-1"))
@@ -99,18 +105,16 @@
 				 (".*courier-bold-.*-mac-roman" . 1.0)
 				 (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
 				 (".*monaco-bold-.*-mac-roman" . 0.9)
-				 ("-cdac$" . 1.3)))))
-	  ((eq window-system 'x)
-	   (progn
-		 (set-face-attribute 'default nil :family "Terminus" :height 80)
-		 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("M+ 2m" . "iso10646-1"))
-		 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("M+ 2m" . "iso10646-1"))
-		 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("M+ 2m" . "iso10646-1")))))
+				 ("-cdac$" . 1.3))))))
 
 ;;;; auto-complete.el
 
 (require 'auto-complete)
 (global-auto-complete-mode t)
+
+(setq ac-auto-show-menu 0)
+(setq ac-quick-help-delay 0)
+(setq ac-auto-start 0)
 
 ;;;; ddskk
 
@@ -133,25 +137,45 @@
                          skk-isearch-mode-enable)
                 (skk-isearch-mode-cleanup))))
 
-;;;; yatex
+;;;; YaTeX
 
-(require 'yatex)
-(setq auto-mode-alist (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+(add-to-list 'auto-mode-alist '("\\.tex$" . yatex-mode))
 (setq YaTeX-kanji-code 4)
 (setq YaTeX-fill-column 100)
 
-;;;; gauche
+;;;; Gauche
 
-(require 'cmuscheme)
+(autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
+(autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
 (setq scheme-program-name "gosh -i")
 
-;;;; haskell-mode
+;;;; Haskell (ghc-mod)
 
-(require 'haskell-mode)
+
+
+;;;; OCaml (TypeRex)
+
+(autoload 'typerex-mode "typerex" "Major mode for editing OCaml code" t)
+(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . typerex-mode))
+(add-to-list 'interpreter-mode-alist '("ocamlrun" . typerex-mode))
+(add-to-list 'interpreter-mode-alist '("ocaml" . typerex-mode))
+
+(setq ocp-server-command "/usr/local/bin/ocp-wizard")
+
+(setq ocp-theme "tuareg")
+
+(setq typerex-let-always-indent nil)
+(setq typerex-with-indent 0)
+(setq typerex-function-indent 0)
+(setq typerex-fun-indent 0)
+(setq typerex-if-then-else-indent 0)
+
+(setq ocp-auto-complete t)
 
 ;;;; agda-mode
 
-(require 'agda2-mode)
+(require 'agda2)
 
 (setq agda2-include-dirs '("" "/home/pi8027/lib/agda/"))
 
@@ -160,7 +184,7 @@
 
 ;;;; proof general
 
-(require 'coq)
+(autoload 'proof-site "coq-mode" "Coq proof assistant on Emacs" t)
 (setq coq-load-path '("."))
 
 ;;;; gdb
@@ -170,7 +194,7 @@
 
 ;;;; sdic-mode
 
-(require 'sdic)
+(autoload 'sdic-describe-word "sdic" nil t)
 
 (global-set-key "\C-cw" 'sdic-describe-word)
 
@@ -197,5 +221,5 @@
 
 ;;;; w3m
 
-(require 'w3m-load)
+(autoload 'w3m "w3m" "Interface for w3m on Emacs" t)
 (setq w3m-home-page "http://google.com/")
