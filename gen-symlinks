@@ -24,6 +24,6 @@ zshrc
 EOT`
 
 for f in $files ; do
-    rm ~/.$f
+    rm -f ~/.$f
     ln -f -s $PWD/$f ~/.$f
 done
