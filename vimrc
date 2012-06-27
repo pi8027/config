@@ -98,9 +98,7 @@ noremap s l
 noremap S L
 
 noremap j n
-noremap J N
-noremap k t
-noremap K T
+noremap k N
 
 """" Date and Time
 
