@@ -8,6 +8,7 @@ autoload -Uz compinit ; compinit
 autoload -Uz add-zsh-hook
 autoload -Uz vcs_info
 autoload -Uz is-at-least
+autoload -Uz zargs
 
 # options
 
@@ -114,6 +115,8 @@ alias ls="ls -F --color"
 alias less="less -r -M"
 alias emacs="emacs --no-window-system"
 alias gosh="rlwrap gosh"
+alias racket="rlwrap racket"
+alias ocaml="rlwrap ocaml"
 alias coqtop="rlwrap coqtop"
 alias gs="rlwrap gs"
 alias hoogle="hoogle --color=true"
