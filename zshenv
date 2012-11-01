@@ -13,3 +13,5 @@ source ~/.zshenv.local
 if which vim > /dev/null ; then
     EDITOR=vim
 fi
+
+coins=coins.tsukuba.ac.jp

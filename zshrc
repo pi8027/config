@@ -34,16 +34,22 @@ sedscript_replace_home="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
 
 # tmux
 
+tmux-rename-pane(){
+    echo -ne "\033]2;$1\033\\"
+}
+
 if [ -z $TMUX ] && [ -z $WITHOUT_TMUX ] && [ $TERM != "screen" ]; then
     tmux
     export WITHOUT_TMUX=1
 elif printenv TMUX > /dev/null ; then
     _update_title1(){
-        echo -ne "\ek$(pwd | sed -e $sedscript_replace_home)% $1\e\\"
+        tmux rename-window "$(pwd | sed -e $sedscript_replace_home)% $1"
+        tmux-rename-pane "$(pwd | sed -e $sedscript_replace_home)% $1"
     }
 
     _update_title2(){
-        echo -ne "\ek$(pwd | sed -e $sedscript_replace_home)%\e\\"
+        tmux rename-window "$(pwd | sed -e $sedscript_replace_home)%"
+        tmux-rename-pane "$(pwd | sed -e $sedscript_replace_home)%"
     }
 
     _tmux_alert(){
@@ -151,7 +157,7 @@ cdd(){
             name="TMUXPWD_$1"
         fi
 
-        dir=`tmux show-environment $name`
+        dir=`tmux show-environment $name | sed "s/^.*=//"`
 
         if [ -d "$dir" ]; then
             cd "$dir"
