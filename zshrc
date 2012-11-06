@@ -1,5 +1,4 @@
-
-source ~/.zshrc.local
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 # autoload
 
@@ -34,22 +33,19 @@ sedscript_replace_home="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
 
 # tmux
 
-tmux-rename-pane(){
-    echo -ne "\033]2;$1\033\\"
-}
+if [ -n $TMUX ] ; then
+    _tmux-rename-pane(){
+        echo -ne "\033]2;$1\033\\"
+    }
 
-if [ -z $TMUX ] && [ -z $WITHOUT_TMUX ] && [ $TERM != "screen" ]; then
-    tmux
-    export WITHOUT_TMUX=1
-elif printenv TMUX > /dev/null ; then
     _update_title1(){
         tmux rename-window "$(pwd | sed -e $sedscript_replace_home)% $1"
-        tmux-rename-pane "$(pwd | sed -e $sedscript_replace_home)% $1"
+        _tmux-rename-pane "$(pwd | sed -e $sedscript_replace_home)% $1"
     }
 
     _update_title2(){
         tmux rename-window "$(pwd | sed -e $sedscript_replace_home)%"
-        tmux-rename-pane "$(pwd | sed -e $sedscript_replace_home)%"
+        _tmux-rename-pane "$(pwd | sed -e $sedscript_replace_home)%"
     }
 
     _tmux_alert(){
@@ -143,8 +139,8 @@ add-zsh-hook chpwd _print_dirstack
 
 _set_tmuxpwd(){
     if [ -n "$TMUX" ]; then
-        tmux setenv $(tmux display -p "TMUXPWD_#I") $PWD
-        tmux setenv $(tmux display -p "TMUXPWD_#I_#P") $PWD
+        tmux setenv $(tmux display -p "TMUXWD_#I") $PWD
+        tmux setenv $(tmux display -p "TMUXWD_#I_#P") $PWD
     fi
 }
 
@@ -152,9 +148,9 @@ cdd(){
     local name dir
     if [ -n "$1" ]; then
         if [ -n "$2" ]; then
-            name="TMUXPWD_$1_$2"
+            name="TMUXWD_$1_$2"
         else
-            name="TMUXPWD_$1"
+            name="TMUXWD_$1"
         fi
 
         dir=`tmux show-environment $name | sed "s/^.*=//"`
