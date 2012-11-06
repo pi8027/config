@@ -1,4 +1,3 @@
-
 """" Edit
 
 set ambiwidth=double
@@ -55,20 +54,17 @@ let &statusline .= '  %-14.(%l,%c%V%) %P '
 
 """" Key Mapping
 
-"inoremap { {}<LEFT>
-"inoremap [ []<LEFT>
-"inoremap ( ()<LEFT>
-"inoremap " ""<LEFT>
-"inoremap ' ''<LEFT>
-"vnoremap { "zdi^V{<C-R>z}<ESC>
-"vnoremap [ "zdi^V[<C-R>z]<ESC>
-"vnoremap ( "zdi^V(<C-R>z)<ESC>
-"noremap " "zdi^V"<C-R>z^V"<ESC>
-"noremap ' "zdi'<C-R>z'<ESC>
-
 inoremap <C-C> <NOP>
 
-"vnoremap <C-Y> !pbcopy<C-M><C-M>u
+"noremap h h
+noremap t j
+noremap n k
+noremap s l
+"noremap H H
+noremap S L
+
+noremap j n
+noremap k N
 
 """" Swap and Backup Files
 
@@ -88,18 +84,6 @@ autocmd FileType make setlocal noexpandtab
 
 let hs_highlight_debug = 1
 
-"""" Dvorak Key Mapping
-
-"noremap h h
-noremap t j
-noremap n k
-noremap s l
-"noremap H H
-noremap S L
-
-noremap j n
-noremap k N
-
 """" Date and Time
 
 if exists("*strftime")
@@ -107,14 +91,15 @@ if exists("*strftime")
 		let dt = strftime("%Y-%m-%dT%T%z")
 		return printf("%s:%s",dt[0:21],dt[22:23])
 	endfunction
-	imap <C-D><C-W> <C-R>=W3CDTF()<CR>
+	inoremap <C-D><C-W> <C-R>=W3CDTF()<CR>
 endif
 
 """" Plugins
 
 call pathogen#runtime_append_all_bundles()
 
-"""" Private Settings
+"""" Local Settings
 
-source ~/.vimrc.private
-
+if filereadable("~/.vimrc.local")
+    source ~/.vimrc.local
+endif
