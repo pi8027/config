@@ -1,4 +1,3 @@
-
 {-# LANGUAGE MultiParamTypeClasses, TypeSynonymInstances #-}
 
 module Main where
@@ -35,10 +34,10 @@ import XMonad.Prompt
 import XMonad.Prompt.Input
 import XMonad.Prompt.Shell
 import XMonad.Prompt.Ssh
+import qualified XMonad.StackSet as W
 import XMonad.Util.NamedWindows
 import XMonad.Util.Run
 import XMonad.Util.WorkspaceCompare
-import qualified XMonad.StackSet as W
 
 import XMonad.Actions.AngleFocus
 import XMonad.Layout.Border
@@ -54,16 +53,16 @@ defaultFontL = "-misc-fixed-medium-r-normal--20-*"
 promptTheme :: XPConfig
 promptTheme = XPC {
   font                = defaultFont,
-  bgColor             = "#33f",
-  fgColor             = "#000",
-  fgHLight            = "#fff",
-  bgHLight            = "#000",
-  borderColor         = "#44f",
-  promptBorderWidth   = 0,
+  bgColor             = "#000",
+  fgColor             = "#fff",
+  fgHLight            = "#000",
+  bgHLight            = "#fff",
+  borderColor         = "#0f0",
+  promptBorderWidth   = 1,
   promptKeymap        = defaultXPKeymap,
   completionKey       = xK_Tab,
   position            = Bottom,
-  height              = 12,
+  height              = 14,
   historySize         = 256,
   historyFilter       = id,
   defaultText         = [],
@@ -126,7 +125,7 @@ wsgrid = do
 --
 
 topics :: [Topic]
-topics = ["work", "web", "im", "pdf"]
+topics = ["work", "web", "irc", "pdf"]
 
 topicConfig :: TopicConfig
 topicConfig = TopicConfig {
@@ -183,7 +182,8 @@ sshotSelect = sshot ""
 
 keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
   -- launcher
-  ((modm,   xK_Return    ), spawn $ XMonad.terminal conf),
+  ((modm,   xK_Return    ), spawn "urxvt -e zsh -c tmux"),
+  ((cmodm,  xK_Return    ), spawn "urxvt"),
   ((smodm,  xK_Return    ), spawn "emacs"),
   ((modm,   xK_semicolon ), shellPrompt promptTheme),
   ((modm,   xK_q         ),
@@ -308,13 +308,14 @@ layoutHook' =
 --
 
 manageHook' :: ManageHook
-manageHook' = composeAll [
-  resource  =? "desktop_window" --> doIgnore,
-  resource  =? "kdesktop"       --> doIgnore,
-  className =? "MPlayer"        --> doFloat,
-  className =? "Gimp"           --> doFloat,
-  className =? "Skype"          -->
-    doF (W.modify' rotateUp . W.view "im" . W.shift "im")]
+manageHook' =
+  composeAll [
+    resource  =? "desktop_window" --> doIgnore,
+    resource  =? "kdesktop"       --> doIgnore,
+    className =? "MPlayer"        --> doFloat,
+    className =? "Gimp"           --> doFloat,
+    className =? "Skype"          -->
+      doF (W.modify' rotateUp . W.view "im" . W.shift "im")]
   <+> manageDocks
   where
   rotateUp (W.Stack t [] rs) = W.Stack t (reverse rs) []
@@ -360,8 +361,8 @@ startupHook' = return ()
 main :: IO ()
 main = do
   xmobarHandle <- spawnPipe "xmobar"
-  spawn "trayer --edge top --align right --width 10 --height 10 \
-    \--transparent true --tint gray --padding 0 --distance -2"
+  spawn "trayer --edge top --align right --width 10 --height 16 \
+    \--transparent true --alpha 0 --tint 0x000000 --padding 0 --distance 0"
   xmonad XConfig {
     -- simple stuff
     terminal           = "urxvt",
@@ -380,4 +381,3 @@ main = do
     handleEventHook    = handleEventHook',
     logHook            = logHook' xmobarHandle,
     startupHook        = startupHook' }
-
