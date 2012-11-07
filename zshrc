@@ -34,18 +34,17 @@ sedscript_replace_home="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
 # tmux
 
 if [ -n $TMUX ] ; then
-    _tmux-rename-pane(){
+    _tmux-set-title(){
+        echo -ne "\033k$1\033\\"
         echo -ne "\033]2;$1\033\\"
     }
 
     _update_title1(){
-        tmux rename-window "$(pwd | sed -e $sedscript_replace_home)% $1"
-        _tmux-rename-pane "$(pwd | sed -e $sedscript_replace_home)% $1"
+        _tmux-set-title "$(pwd | sed -e $sedscript_replace_home)% $1"
     }
 
     _update_title2(){
-        tmux rename-window "$(pwd | sed -e $sedscript_replace_home)%"
-        _tmux-rename-pane "$(pwd | sed -e $sedscript_replace_home)%"
+        _tmux-set-title "$(pwd | sed -e $sedscript_replace_home)%"
     }
 
     _tmux_alert(){
