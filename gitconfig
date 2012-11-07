@@ -1,3 +1,6 @@
+[include]
+    path = .gitconfig.local
+
 [core]
     pager = less
     editor = vim
@@ -9,7 +12,7 @@
 [alias]
     lol = log --graph --decorate --abbrev-commit --pretty=oneline
     lola = log --graph --decorate --abbrev-commit --pretty=oneline --all
-    lolv = log --graph --all --color --pretty='%x09%C(yellow)%h %Cgreen%ci %Cblue%cn%x09%Creset%s %Cred%d%Creset'
+    lolv = log --graph --decorate --all --color --pretty='%x09%C(yellow)%h %Cgreen%ci %Cblue%cn%x09%Creset%s %Cred%d%Creset'
     wdiff = diff --color-words
     wshow = show --color-words
 
