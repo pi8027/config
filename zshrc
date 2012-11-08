@@ -112,7 +112,6 @@ LISTMAX=0
 # alias
 
 alias history-all="history -E 1 | less"
-alias ls="ls -F --color"
 alias less="less -r -M"
 alias emacs="emacs --no-window-system"
 alias gosh="rlwrap gosh"
@@ -122,6 +121,17 @@ alias coqtop="rlwrap coqtop"
 alias gs="rlwrap gs"
 alias hoogle="hoogle --color=true"
 alias google="w3m http://google.com/"
+
+case "${OSTYPE}" in
+linux*)
+  alias ls="ls -F --color"
+  ;;
+*bsd*|darwin*)
+  alias ls="ls -F -G"
+  ;;
+esac
+alias ll="ls -l"
+alias la="ls -la"
 
 # directory stack
 
