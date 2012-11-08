@@ -1,5 +1,3 @@
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
 # autoload
 
 autoload -Uz colors ; colors
@@ -27,24 +25,20 @@ typeset -U cdpath fpath manpath
 
 cdpath=(~)
 
-# sed scripts
-
-sedscript_replace_home="s/`echo $HOME | sed -e "s/\\//\\\\\\\\\//g"`/~/g"
-
 # tmux
 
-if [ -n $TMUX ] ; then
+if [ -n "$TMUX" ] ; then
     _tmux-set-title(){
         echo -ne "\033k$1\033\\"
         echo -ne "\033]2;$1\033\\"
     }
 
     _update_title1(){
-        _tmux-set-title "$(pwd | sed -e $sedscript_replace_home)% $1"
+        _tmux-set-title "$(print -D $(pwd))% $1"
     }
 
     _update_title2(){
-        _tmux-set-title "$(pwd | sed -e $sedscript_replace_home)%"
+        _tmux-set-title "$(print -D $(pwd))%"
     }
 
     _tmux_alert(){
@@ -77,7 +71,7 @@ fi
 _update_rprompt(){
     LANG=en_US.UTF-8 vcs_info
     if [ -n "$vcs_info_msg_0_" ]; then
-        psvar=(`echo "$vcs_info_msg_0_" | sed -e $sedscript_replace_home`
+        psvar=(`print -D "$vcs_info_msg_0_"`
             "$vcs_info_msg_1_" "$vcs_info_msg_2_" "$vcs_info_msg_3_")
         [[ -n $psvar[4] ]] && psvar[4]=" "$psvar[4]
         RPROMPT="%F{green}[%1v:%2v] %F{red}%3v%f%4v"
@@ -167,10 +161,10 @@ cdd(){
         if [ -d "$dir" ]; then
             cd "$dir"
         else
-            echo "cdd : error"
+            echo "cdd : error" >&2
         fi
     else
-        echo "usage : cdd [window [pane]]"
+        echo "usage : cdd [window [pane]]" >&2
     fi
 }
 
@@ -202,7 +196,7 @@ cdv(){
     if [ -n "$vcs_info_msg_0_" ]; then
         cd "$vcs_info_msg_0_/$1"
     else
-        echo "vchome : Repository not found."
+        echo "vchome : Repository not found." >&2
     fi
 }
 
@@ -215,7 +209,7 @@ _cdv(){
 
 compdef _cdv cdv
 
-# xclip editor
+# clipboard editor
 
 clipedit(){
     file=`tempfile`
@@ -225,7 +219,7 @@ clipedit(){
     rm $file
 }
 
-# tmux and xclip
+# tmux buffer
 
 tmux-loadcb(){
     clipboardout | tmux load-buffer $@ -
@@ -235,3 +229,16 @@ tmux-storecb(){
     tmux save-buffer $@ - | clipboardin
 }
 
+tmux-editbuf(){
+    buffer=$(echo "$1" | sed 's/^$/0/')
+    echo "$buffer" | grep -Eqv "^[0-9]{1,}$" && return 1
+    file=`tempfile`
+    tmux save-buffer -b $buffer $file
+    $EDITOR $file
+    tmux load-buffer -b $buffer $file
+    rm $file
+}
+
+# local configuration
+
+[ -f ~/.zshrc.local ] && . ~/.zshrc.local
