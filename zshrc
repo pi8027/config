@@ -1,3 +1,7 @@
+# local configuration
+
+[ -f ~/.zshrc.local ] && POS=before . ~/.zshrc.local
+
 # autoload
 
 autoload -Uz colors ; colors
@@ -49,7 +53,7 @@ if [ -n "$TMUX" ] ; then
     add-zsh-hook precmd _update_title2
     add-zsh-hook precmd _tmux_alert
 
-    source ~/.zsh/nw.zsh
+    . ~/.zsh/nw.zsh
 fi
 
 # prompt
@@ -116,7 +120,7 @@ alias gs="rlwrap gs"
 alias hoogle="hoogle --color=true"
 alias google="w3m http://google.com/"
 
-case "${OSTYPE}" in
+case "$OSTYPE" in
 linux*)
   alias ls="ls -F --color"
   ;;
@@ -241,4 +245,4 @@ tmux-editbuf(){
 
 # local configuration
 
-[ -f ~/.zshrc.local ] && . ~/.zshrc.local
+[ -f ~/.zshrc.local ] && POS=after . ~/.zshrc.local

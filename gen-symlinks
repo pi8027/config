@@ -18,6 +18,7 @@ xmobarrc
 xmonad
 xsession
 zlogin
+zlogout
 zprofile
 zsh
 zshenv
