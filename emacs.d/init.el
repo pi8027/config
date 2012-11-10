@@ -8,14 +8,9 @@
 ;;;; path
 
 (defun add-load-paths (paths)
-  (if (null paths)
-      nil
-      (progn
-       (let* ((head (car paths))
-              (default-directory head))
-             (if (file-exists-p head)
-                 (normal-top-level-add-subdirs-to-load-path)))
-       (add-load-paths (cdr paths)))))
+  (dolist (default-directory paths)
+    (if (file-exists-p default-directory)
+	(normal-top-level-add-subdirs-to-load-path))))
 
 (add-load-paths
     '("~/.emacs.d/site-lisp"
@@ -86,26 +81,27 @@
 
 ;;;; font
 
-(cond ((eq window-system 'x)
-	   (progn
-		 (set-face-attribute 'default nil :family "Terminus" :height 80)
-		 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("M+ 2m" . "iso10646-1"))
-		 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("M+ 2m" . "iso10646-1"))
-		 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("M+ 2m" . "iso10646-1"))))
-      ((eq window-system 'ns)
-	   (progn
-		 (set-face-attribute 'default nil :family "Monaco" :height 100)
-		 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("Osaka" . "iso10646-1"))
-		 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("Osaka" . "iso10646-1"))
-		 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("Osaka" . "iso10646-1"))
-		 (setq face-font-rescale-alist
-			   '(("^-apple-hiragino.*" . 1.2)
-				 (".*osaka-bold.*" . 1.2)
-				 (".*osaka-medium.*" . 1.2)
-				 (".*courier-bold-.*-mac-roman" . 1.0)
-				 (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
-				 (".*monaco-bold-.*-mac-roman" . 0.9)
-				 ("-cdac$" . 1.3))))))
+(defun my-font-settings (scale)
+  (cond ((eq window-system 'x)
+	 (set-face-attribute 'default nil :family "Terminus" :height (floor (* scale 80)))
+	 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("M+ 2m" . "iso10646-1"))
+	 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("M+ 2m" . "iso10646-1"))
+	 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("M+ 2m" . "iso10646-1")))
+	((eq window-system 'ns)
+	 (set-face-attribute 'default nil :family "Monaco" :height (floor (* scale 100)))
+	 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("Osaka" . "iso10646-1"))
+	 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("Osaka" . "iso10646-1"))
+	 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("Osaka" . "iso10646-1"))
+	 (setq face-font-rescale-alist
+	       '(("^-apple-hiragino.*" . 1.2)
+		 (".*osaka-bold.*" . 1.2)
+		 (".*osaka-medium.*" . 1.2)
+		 (".*courier-bold-.*-mac-roman" . 1.0)
+		 (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
+		 (".*monaco-bold-.*-mac-roman" . 0.9)
+		 ("-cdac$" . 1.3))))))
+
+(my-font-settings 1)
 
 ;;;; auto-complete.el
 
