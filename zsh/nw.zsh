@@ -1,16 +1,13 @@
-
 nw(){
-    local CMDNAME split_opts spawn_command
-    CMDNAME=`basename $0`
+    local split_opts spawn_command
 
-    while getopts dhvPp:l:t:b: OPT
-    do
+    while getopts dhvPp:l:t:b: OPT ; do
         case $OPT in
         "d" | "h" | "v" | "P" )
             split_opts="$split_opts -$OPT";;
         "p" | "l" | "t" )
             split_opts="$split_opts -$OPT $OPTARG";;
-        * ) echo "Usage: $CMDNAME [-dhvP]" \
+        * ) echo "Usage: $(basename $0) [-dhvP]" \
                  "[-p percentage|-l size] [-t target-pane] [command]" 1>&2
             return 1;;
         esac
@@ -38,4 +35,3 @@ _nw(){
 }
 
 compdef _nw nw
-
