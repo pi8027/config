@@ -21,8 +21,7 @@ setopt extended_glob
 
 # variable types
 
-typeset -T LD_LIBRARY_PATH ld_library_path
-typeset -U path cdpath fpath manpath ld_library_path
+typeset -U path cdpath fpath manpath
 
 # local configuration
 
