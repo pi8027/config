@@ -1,4 +1,3 @@
-
 :set +t +s
 :set prompt "ghci> "
 
@@ -16,4 +15,3 @@ setLambdabotHome "/home/pi8027/.cabal/bin/"
 :def where     lambdabot "where"
 :def version   lambdabot "version"
 :def src       lambdabot "src"
-
