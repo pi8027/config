@@ -1,7 +1,3 @@
-# local configuration
-
-[ -f ~/.zshrc.local ] && POS=before . ~/.zshrc.local
-
 # autoload
 
 autoload -Uz colors ; colors
@@ -23,11 +19,18 @@ setopt pushd_ignore_dups
 setopt pushd_silent
 setopt extended_glob
 
+# variable types
+
+typeset -T LD_LIBRARY_PATH ld_library_path
+typeset -U path cdpath fpath manpath ld_library_path
+
+# local configuration
+
+[ -f ~/.zshrc.local ] && POS=before . ~/.zshrc.local
+
 # variables
 
-typeset -U cdpath fpath manpath
-
-cdpath=(~)
+cdpath=(~ $cdpath)
 
 export LANG=ja_JP.UTF-8
 export LS_COLORS="no=00:fi=00:di=04;34:ln=01;36:pi=40;33:so=40;33:bd=40;33:cd=40;33:ex=01;31:or=04;36"
