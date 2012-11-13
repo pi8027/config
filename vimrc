@@ -46,7 +46,7 @@ set linespace=-3
 
 colorscheme desert
 
-let &statusline = ' '
+let &statusline = ''
 let &statusline .= '%<%f %h%m%r%w'
 let &statusline .= '[%{&l:fileencoding == "" ? &encoding : &l:fileencoding}]'
 let &statusline .= '%='
