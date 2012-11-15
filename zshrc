@@ -136,13 +136,12 @@ alias gs='rlwrap gs'
 alias hoogle='hoogle --color=true'
 alias google='w3m http://google.com/'
 
+alias ls='ls -F'
 case "$OSTYPE" in
 linux*)
-  alias ls='ls -F --color'
-  ;;
-*bsd*|darwin*)
-  alias ls='ls -F -G'
-  ;;
+  alias ls='ls --color' ;;
+darwin*)
+  alias ls='ls -G' ;;
 esac
 alias ll='ls -l'
 alias la='ls -la'
