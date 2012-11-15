@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 files=`cat <<EOT
 Xmodmap
