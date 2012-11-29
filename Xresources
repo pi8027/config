@@ -35,6 +35,7 @@ urxvt.scrollBar: False
 urxvt.saveLines: 0
 urxvt.inputMethod: none
 urxvt.title : urxvt
+urxvt.iso14755: False
 urxvt.iso14755_52: False
 
 Emacs.useXIM: false
