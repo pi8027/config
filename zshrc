@@ -48,6 +48,9 @@ coins=coins.tsukuba.ac.jp
 # tmux
 
 if [ -n "$TMUX" ] ; then
+
+    # title
+
     _tmux-set-title(){
         echo -ne "\033k$1\033\\"
         echo -ne "\033]2;$1\033\\"
@@ -69,7 +72,30 @@ if [ -n "$TMUX" ] ; then
     add-zsh-hook precmd _update_title2
     add-zsh-hook precmd _tmux_alert
 
-    . ~/.zsh/nw.zsh
+    # buffer
+
+    tmux-loadcb(){
+        clipboardout | tmux load-buffer $@ -
+    }
+
+    tmux-storecb(){
+        tmux save-buffer $@ - | clipboardin
+    }
+
+    tmux-editbuf(){
+        local buffer=$(echo "$1" | sed 's/^$/0/')
+        local file=`tempfile`
+        echo "$buffer" | grep -Eqv '^[0-9]{1,}$' && return 1
+        tmux save-buffer -b $buffer $file
+        $EDITOR $file
+        tmux load-buffer -b $buffer $file
+        rm $file
+    }
+
+    # other
+
+    . ~/.zsh/tmux-cdd.zsh
+    . ~/.zsh/tmux-np.zsh
 fi
 
 # prompt
@@ -157,38 +183,6 @@ _print_dirstack(){
 
 add-zsh-hook chpwd _print_dirstack
 
-# cdd
-
-_set_tmuxpwd(){
-    if [ -n "$TMUX" ]; then
-        tmux setenv $(tmux display -p 'TMUXWD_#I') $PWD
-        tmux setenv $(tmux display -p 'TMUXWD_#I_#P') $PWD
-    fi
-}
-
-cdd(){
-    local name dir
-    if [ -n "$1" ]; then
-        if [ -n "$2" ]; then
-            name="TMUXWD_$1_$2"
-        else
-            name="TMUXWD_$1"
-        fi
-
-        dir=`tmux show-environment $name | sed 's/^.*=//'`
-
-        if [ -d "$dir" ]; then
-            cd "$dir"
-        else
-            echo 'cdd : error' >&2
-        fi
-    else
-        echo 'usage : cdd [window [pane]]' >&2
-    fi
-}
-
-add-zsh-hook chpwd _set_tmuxpwd
-
 # make and change directory
 
 mpd(){
@@ -233,26 +227,6 @@ clipedit(){
     clipboardout > $file
     $EDITOR $file
     cat $file | clipboardin
-    rm $file
-}
-
-# tmux buffer
-
-tmux-loadcb(){
-    clipboardout | tmux load-buffer $@ -
-}
-
-tmux-storecb(){
-    tmux save-buffer $@ - | clipboardin
-}
-
-tmux-editbuf(){
-    local buffer=$(echo "$1" | sed 's/^$/0/')
-    local file=`tempfile`
-    echo "$buffer" | grep -Eqv '^[0-9]{1,}$' && return 1
-    tmux save-buffer -b $buffer $file
-    $EDITOR $file
-    tmux load-buffer -b $buffer $file
     rm $file
 }
 

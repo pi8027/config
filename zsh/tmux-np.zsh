@@ -1,4 +1,4 @@
-nw(){
+np(){
     local split_opts spawn_command
 
     while getopts dhvPp:l:t:b: OPT ; do
@@ -14,13 +14,13 @@ nw(){
     done
     shift `expr $OPTIND - 1`
 
-    spawn_command=$@
+    spawn_command="$@"
     [[ -z $spawn_command ]] && spawn_command=$SHELL
 
-    tmux split-window `echo -n $split_opts` "cd $PWD ; $spawn_command"
+    tmux split-window `echo -n $split_opts` "cd $PWD ; eval '$spawn_command'"
 }
 
-_nw(){
+_np(){
     local args
     args=(
         '-d[do not make the new window become the active one]'
@@ -34,4 +34,4 @@ _nw(){
     _arguments ${args} && return
 }
 
-compdef _nw nw
+compdef _np np
