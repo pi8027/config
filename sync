@@ -12,8 +12,6 @@ mlterm              .mlterm
 skk                 .skk
 tmux.conf           .tmux.conf
 vim                 .vim
-vimperator          .vimperator
-vimperatorrc        .vimperatorrc
 vimrc               .vimrc
 xmobarrc            .xmobarrc
 xmonad              .xmonad
