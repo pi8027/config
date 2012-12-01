@@ -83,12 +83,16 @@ if [ -n "$TMUX" ] ; then
     }
 
     tmux-editbuf(){
-        local buffer=$(echo "$1" | sed 's/^$/0/')
+        local buffer=$(printf "%d" "$1")
         local file=`tempfile`
         echo "$buffer" | grep -Eqv '^[0-9]{1,}$' && return 1
         tmux save-buffer -b $buffer $file
         $EDITOR $file
-        tmux load-buffer -b $buffer $file
+        if [[ $(wc -c < $file) -eq 0 ]] ; then
+            tmux delete-buffer -b $buffer
+        else
+            tmux load-buffer -b $buffer $file
+        fi
         rm $file
     }
 
