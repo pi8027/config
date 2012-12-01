@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+
+set -x
+{
+cat <<EOT
+Xmodmap             .Xmodmap
+Xresources          .Xresources
+emacs.d             .emacs.d
+ghci                .ghci
+gitconfig           .gitconfig
+mlterm              .mlterm
+skk                 .skk
+tmux.conf           .tmux.conf
+vim                 .vim
+vimperator          .vimperator
+vimperatorrc        .vimperatorrc
+vimrc               .vimrc
+xmobarrc            .xmobarrc
+xmonad              .xmonad
+xsession            .xsession
+zlogin              .zlogin
+zlogout             .zlogout
+zprofile            .zprofile
+zsh                 .zsh
+zshenv              .zshenv
+zshrc               .zshrc
+EOT
+} | while read origin symlink ; do
+    rm -f ~/$symlink
+    ln -f -s $PWD/$origin ~/$symlink
+done
