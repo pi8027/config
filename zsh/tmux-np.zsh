@@ -14,10 +14,8 @@ np(){
     done
     shift `expr $OPTIND - 1`
 
-    spawn_command="$@"
-    [[ -z $spawn_command ]] && spawn_command=$SHELL
-
-    tmux split-window `echo -n $split_opts` "cd $PWD ; eval '$spawn_command'"
+    tmux split-window `echo -n $split_opts` \
+        "cd $PWD ; $(printf "%q " ${@:-$SHELL})"
 }
 
 _np(){
