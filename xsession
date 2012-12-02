@@ -1,3 +1,2 @@
-#!/bin/sh
-xmonad
 xmodmap .Xmodmap
+exec xmonad
