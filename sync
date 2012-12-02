@@ -8,7 +8,6 @@ Xresources          .Xresources
 emacs.d             .emacs.d
 ghci                .ghci
 gitconfig           .gitconfig
-mlterm              .mlterm
 skk                 .skk
 tmux.conf           .tmux.conf
 vim                 .vim
