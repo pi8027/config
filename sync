@@ -16,12 +16,8 @@ vimrc               .vimrc
 xmobarrc            .xmobarrc
 xmonad              .xmonad
 xsession            .xsession
-zlogin              .zlogin
-zlogout             .zlogout
-zprofile            .zprofile
-zsh                 .zsh
+zsh.d               .zsh.d
 zshenv              .zshenv
-zshrc               .zshrc
 EOT
 } | while read origin symlink ; do
     rm -f ~/$symlink

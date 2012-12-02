@@ -204,8 +204,8 @@ if [[ -n $TMUX ]] ; then
 
     # other
 
-    . ~/.zsh/tmux-cdd.zsh
-    . ~/.zsh/tmux-np.zsh
+    . $ZDOTDIR/tmux-cdd.zsh
+    . $ZDOTDIR/tmux-np.zsh
 fi
 
 # vcs_info
