@@ -1,7 +1,7 @@
 # local configuration
 
-[ -f ~/.zprofile.local ] && POS=before . ~/.zprofile.local
+[ -f $ZDOTDIR/.zprofile.local ] && POS=before . $ZDOTDIR/.zprofile.local
 
 # local configuration
 
-[ -f ~/.zprofile.local ] && POS=after . ~/.zprofile.local
+[ -f $ZDOTDIR/.zprofile.local ] && POS=after . $ZDOTDIR/.zprofile.local

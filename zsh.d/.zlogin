@@ -1,7 +1,7 @@
 # local configuration
 
-[ -f ~/.logout.local ] && POS=before . ~/.logout.local
+[ -f $ZDOTDIR/.logout.local ] && POS=before . $ZDOTDIR/.logout.local
 
 # local configuration
 
-[ -f ~/.logout.local ] && POS=after . ~/.logout.local
+[ -f $ZDOTDIR/.logout.local ] && POS=after . $ZDOTDIR/.logout.local

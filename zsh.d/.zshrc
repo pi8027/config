@@ -27,7 +27,7 @@ export LANG PATH MANPATH LS_COLORS
 
 # local configuration
 
-[ -f ~/.zshrc.local ] && POS=before . ~/.zshrc.local
+[ -f $ZDOTDIR/.zshrc.local ] && POS=before . $ZDOTDIR/.zshrc.local
 
 # variables
 
@@ -84,7 +84,7 @@ bindkey -e
 
 # history
 
-HISTFILE=$HOME/.zsh-history
+HISTFILE=$ZDOTDIR/.zsh-history
 HISTSIZE=100000
 SAVEHIST=100000
 setopt extended_history
@@ -246,4 +246,4 @@ clipedit(){
 
 # local configuration
 
-[ -f ~/.zshrc.local ] && POS=after . ~/.zshrc.local
+[ -f $ZDOTDIR/.zshrc.local ] && POS=after . $ZDOTDIR/.zshrc.local

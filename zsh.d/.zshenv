@@ -1,6 +1,6 @@
 # local configuration
 
-[ -f ~/.zshenv.local ] && POS=before . ~/.zshenv.local
+[ -f $ZDOTDIR/.zshenv.local ] && POS=before . $ZDOTDIR/.zshenv.local
 
 # environment variables
 
@@ -10,4 +10,4 @@ path=($HOME/bin(N-/) $HOME/.cabal/bin(N-/) $path)
 
 # local configuration
 
-[ -f ~/.zshenv.local ] && POS=after . ~/.zshenv.local
+[ -f $ZDOTDIR/.zshenv.local ] && POS=after . $ZDOTDIR/.zshenv.local
