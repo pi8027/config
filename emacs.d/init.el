@@ -1,4 +1,3 @@
-
 ;;;; language, encoding
 
 (set-language-environment 'Japanese)
@@ -180,8 +179,9 @@
 
 ;;;; proof general
 
-(autoload 'proof-site "coq-mode" "Coq proof assistant on Emacs" t)
+(autoload 'coq-mode "proof-site" "Coq proof assistant on Emacs" t)
 (setq coq-load-path '("."))
+(setq proof-three-window-enable t)
 
 ;;;; gdb
 
