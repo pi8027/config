@@ -14,8 +14,8 @@ np(){
     done
     shift `expr $OPTIND - 1`
 
-    tmux split-window `echo -n $split_opts` \
-        "cd $PWD ; $(printf "%q " ${@:-$SHELL})"
+    tmux split-window $(echo -n $split_opts) \
+        -c $PWD "$(printf "%q " ${@:-$SHELL})"
 }
 
 _np(){
