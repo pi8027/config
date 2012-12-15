@@ -361,7 +361,7 @@ startupHook' = return ()
 main :: IO ()
 main = do
   xmobarHandle <- spawnPipe "xmobar"
-  spawn "trayer --edge top --align right --width 10 --height 16 \
+  spawn "trayer --edge top --align right --width 10 --height 14 \
     \--transparent true --alpha 0 --tint 0x000000 --padding 0 --distance 0"
   xmonad XConfig {
     -- simple stuff
