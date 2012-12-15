@@ -15,6 +15,7 @@
     '("~/.emacs.d/site-lisp"
       "/usr/share/emacs/site-lisp"
       "/usr/share/emacs23/site-lisp"
+      "/usr/local/share/emacs/site-lisp"
       "/opt/local/share/emacs/site-lisp"
       "/opt/local/share/emacs/23.2/site-lisp"))
 
@@ -70,8 +71,8 @@
      (modeline ((t (:foreground "black" :background "wheat"))))
      (italic ((t (:foreground "dark red" :italic t))))
      (bold-italic ((t (:foreground "dark red" :bold t :italic t))))
-     (font-lock-comment-face ((t (:foreground "Firebrick"))))
      (bold ((t (:bold))))
+     (font-lock-comment-face ((t (:foreground "salmon"))))
      (font-lock-function-name-face ((t (:foreground "#FFFFFF")))))))
 
 (require 'color-theme)
@@ -182,6 +183,7 @@
 (autoload 'coq-mode "proof-site" "Coq proof assistant on Emacs" t)
 (setq coq-load-path '("."))
 (setq proof-three-window-enable t)
+(add-to-list 'auto-mode-alist '("\\.v" . coq-mode))
 
 ;;;; gdb
 
