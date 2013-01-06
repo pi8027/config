@@ -61,13 +61,16 @@ promptTheme = XPC {
   promptBorderWidth   = 1,
   promptKeymap        = defaultXPKeymap,
   completionKey       = xK_Tab,
+  changeModeKey       = xK_grave,
   position            = Bottom,
   height              = 14,
   historySize         = 256,
   historyFilter       = id,
   defaultText         = [],
   autoComplete        = Nothing,
-  showCompletionOnTab = False }
+  showCompletionOnTab = False,
+  searchPredicate     = isPrefixOf,
+  alwaysHighlight     = False }
 
 tabTheme :: Theme
 tabTheme = Theme {
@@ -367,6 +370,7 @@ main = do
     -- simple stuff
     terminal           = "urxvt",
     focusFollowsMouse  = False,
+    clickJustFocuses   = True,
     borderWidth        = 0,
     modMask            = mod4Mask,
     workspaces         = topics,
