@@ -16,6 +16,8 @@ urxvt.color12: #4682B4
 urxvt.color13: #FF00FF
 urxvt.color14: #00FFFF
 urxvt.color15: #FFFFFF
+urxvt.cursorColor: red
+urxvt.cursorColor2: white
 !rxvt-unicode フォント設定
 !fc-list, xlsfonts 参照
 urxvt.font:\
