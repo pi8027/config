@@ -221,3 +221,8 @@
 
 (autoload 'w3m "w3m" "Interface for w3m on Emacs" t)
 (setq w3m-home-page "http://google.com/")
+
+;;;; local configuration
+
+(if (file-exists-p "~/.emacs.d/init.local.el")
+    (load-file "~/.emacs.d/init.local.el"))
