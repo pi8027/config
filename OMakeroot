@@ -1,0 +1,5 @@
+open build/Common
+
+DefineCommandVars()
+
+.SUBDIRS: . emacs.d/site-lisp

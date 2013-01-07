@@ -1,0 +1,7 @@
+.DEFAULT: color-theme-6.6.0.tar.gz
+
+color-theme-6.6.0.tar.gz: color-theme-6.6.0.tar.gz-CHECKSUM
+	wget -O color-theme-6.6.0.tar.gz \
+	  "http://download.savannah.gnu.org/releases/color-theme/color-theme-6.6.0.tar.gz"
+	sha256sum -c color-theme-6.6.0.tar.gz-CHECKSUM
+	tar xzvf color-theme-6.6.0.tar.gz
