@@ -1,2 +1,17 @@
+/.omakedb
+/.omakedb.lock
+/emacs.d/ac-comphist.dat
+/emacs.d/auto-save-list/
+/emacs.d/init.local.el
+/emacs.d/site-lisp/*.tar.gz
+/emacs.d/site-lisp/agda-mode/
+/emacs.d/site-lisp/color-theme-6.6.0/
+/xmonad/history
+/xmonad/xmonad-*
+/xmonad/xmonad.errors
+/zsh.d/.zcompdump
+/zsh.d/.zsh-history
+OMakefile.omc
+OMakeroot.omc
 *.hi
 *.o
