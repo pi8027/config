@@ -14,10 +14,8 @@
 (add-load-paths
     '("~/.emacs.d/site-lisp"
       "/usr/share/emacs/site-lisp"
-      "/usr/share/emacs23/site-lisp"
       "/usr/local/share/emacs/site-lisp"
-      "/opt/local/share/emacs/site-lisp"
-      "/opt/local/share/emacs/23.2/site-lisp"))
+      "/opt/local/share/emacs/site-lisp"))
 
 ;;;; key binding
 
