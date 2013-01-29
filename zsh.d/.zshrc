@@ -187,17 +187,15 @@ if [[ -n $TMUX ]] ; then
         if tmux save-buffer -b "${buffer:-0}" $file ; then
             buffer=${buffer:-0}
         elif [[ -n $buffer ]] ; then
-            exit 1
+            return 1
         else
             sleep 0.5
         fi
         $EDITOR $file
         if [[ $(wc -c < $file) -eq 0 ]] ; then
             [[ -n $buffer ]] && tmux delete-buffer -b $buffer
-        elif [[ -n $buffer ]] ; then
-            tmux load-buffer -b $buffer $file
         else
-            tmux load-buffer $file
+            tmux load-buffer ${buffer:+-b $buffer} $file
         fi
         rm $file
     }
