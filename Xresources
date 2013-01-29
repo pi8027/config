@@ -1,44 +1,46 @@
-urxvt.background: black
-urxvt.foreground: white
-urxvt.color0:  #000000
-urxvt.color1:  #CD0000
-urxvt.color2:  #00CD00
-urxvt.color3:  #CDCD00
-urxvt.color4:  #1E90FF
-urxvt.color5:  #CD00CD
-urxvt.color6:  #00CDCD
-urxvt.color7:  #E5E5E5
-urxvt.color8:  #4C4C4C
-urxvt.color9:  #FF0000
-urxvt.color10: #00FF00
-urxvt.color11: #FFFF00
-urxvt.color12: #4682B4
-urxvt.color13: #FF00FF
-urxvt.color14: #00FFFF
-urxvt.color15: #FFFFFF
-urxvt.cursorColor: red
-urxvt.cursorColor2: white
+urxvt.*.background:     black
+urxvt.*.foreground:     white
+urxvt.white.background: white
+urxvt.white.foreground: black
+urxvt.*.color0:         #000000
+urxvt.*.color1:         #CD0000
+urxvt.*.color2:         #00CD00
+urxvt.*.color3:         #CDCD00
+urxvt.*.color4:         #1E90FF
+urxvt.*.color5:         #CD00CD
+urxvt.*.color6:         #00CDCD
+urxvt.*.color7:         #E5E5E5
+urxvt.*.color8:         #4C4C4C
+urxvt.*.color9:         #FF0000
+urxvt.*.color10:        #00FF00
+urxvt.*.color11:        #FFFF00
+urxvt.*.color12:        #4682B4
+urxvt.*.color13:        #FF00FF
+urxvt.*.color14:        #00FFFF
+urxvt.*.color15:        #FFFFFF
+urxvt.*.cursorColor:    red
+urxvt.*.cursorColor2:   white
 !rxvt-unicode フォント設定
 !fc-list, xlsfonts 参照
-urxvt.font:\
+urxvt.*.font:\
     -mplus-gothic-medium-r-normal--12-120-75-75-c-60-iso8859-1,\
     -mplus-gothic-medium-r-normal--12-120-75-75-c-120-jisx0208.1990-0
-urxvt.boldFont:\
+urxvt.*.boldFont:\
     -mplus-gothic-bold-r-normal--12-120-75-75-c-60-iso8859-1,\
     -mplus-gothic-bold-r-normal--12-120-75-75-c-120-jisx0208.1990-0
-urxvt.italicFont:\
+urxvt.*.italicFont:\
     -mplus-gothic-medium-r-normal--12-120-75-75-c-60-iso8859-1,\
     -mplus-gothic-medium-r-normal--12-120-75-75-c-120-jisx0208.1990-0
-urxvt.boldItalicFont:\
+urxvt.*.boldItalicFont:\
     -mplus-gothic-bold-r-normal--12-120-75-75-c-60-iso8859-1,\
     -mplus-gothic-bold-r-normal--12-120-75-75-c-120-jisx0208.1990-0
-urxvt.lineSpace: 0
-urxvt.scrollBar: False
-urxvt.saveLines: 0
-urxvt.inputMethod: none
-urxvt.title : urxvt
-urxvt.iso14755: False
-urxvt.iso14755_52: False
+urxvt.*.lineSpace: 0
+urxvt.*.scrollBar: False
+urxvt.*.saveLines: 0
+urxvt.*.inputMethod: none
+urxvt.*.title : urxvt
+urxvt.*.iso14755: False
+urxvt.*.iso14755_52: False
 
 Emacs.useXIM: false
 
