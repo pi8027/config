@@ -103,7 +103,6 @@ LISTMAX=0
 
 alias history-all='history -E 1 | less'
 alias less='less -r -M'
-alias emacs='emacs --no-window-system'
 alias gosh='rlwrap gosh'
 alias racket='rlwrap racket'
 alias ocaml='rlwrap ocaml'
@@ -121,6 +120,16 @@ darwin*)
 esac
 alias ll='ls -l'
 alias la='ls -la'
+
+_emacs(){
+    if [[ -f config.el ]]; then
+        \emacs -l config.el $@
+    else
+        \emacs $@
+    fi
+}
+
+alias emacs=_emacs
 
 # directory stack
 
