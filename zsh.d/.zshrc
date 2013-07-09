@@ -165,7 +165,13 @@ if [[ -n $TMUX ]] ; then
     }
 
     _update_title1(){
-        _tmux-set-title "$(print -D $(pwd))% $1"
+        local arr
+        arr=(${=1})
+        if [[ ${arr[1]} = 'fg' ]]; then
+            _tmux-set-title "$(print -D $(pwd))%(fg) ${jobtexts[${arr[2]:-%+}]}"
+        else
+            _tmux-set-title "$(print -D $(pwd))% $1"
+        fi
     }
 
     _update_title2(){
