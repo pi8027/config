@@ -23,17 +23,17 @@ urxvt.*.cursorColor2:   white
 !rxvt-unicode フォント設定
 !fc-list, xlsfonts 参照
 urxvt.*.font:\
-    -mplus-gothic-medium-r-normal--12-120-75-75-c-60-iso8859-1,\
-    -mplus-gothic-medium-r-normal--12-120-75-75-c-120-jisx0208.1990-0
+    -mplus-gothic-medium-r-normal--13-120-75-75-c-60-iso8859-1,\
+    -mplus-gothic-medium-r-normal--13-120-75-75-c-120-jisx0208.1990-0
 urxvt.*.boldFont:\
-    -mplus-gothic-bold-r-normal--12-120-75-75-c-60-iso8859-1,\
-    -mplus-gothic-bold-r-normal--12-120-75-75-c-120-jisx0208.1990-0
+    -mplus-gothic-bold-r-normal--13-120-75-75-c-60-iso8859-1,\
+    -mplus-gothic-bold-r-normal--13-120-75-75-c-120-jisx0208.1990-0
 urxvt.*.italicFont:\
-    -mplus-gothic-medium-r-normal--12-120-75-75-c-60-iso8859-1,\
-    -mplus-gothic-medium-r-normal--12-120-75-75-c-120-jisx0208.1990-0
+    -mplus-gothic-medium-r-normal--13-120-75-75-c-60-iso8859-1,\
+    -mplus-gothic-medium-r-normal--13-120-75-75-c-120-jisx0208.1990-0
 urxvt.*.boldItalicFont:\
-    -mplus-gothic-bold-r-normal--12-120-75-75-c-60-iso8859-1,\
-    -mplus-gothic-bold-r-normal--12-120-75-75-c-120-jisx0208.1990-0
+    -mplus-gothic-bold-r-normal--13-120-75-75-c-60-iso8859-1,\
+    -mplus-gothic-bold-r-normal--13-120-75-75-c-120-jisx0208.1990-0
 urxvt.*.lineSpace: 0
 urxvt.*.scrollBar: False
 urxvt.*.saveLines: 0
@@ -48,8 +48,8 @@ XLock.mode: blank
 XLock.description: off
 XLock.echokeys: on
 XLock.echokey: *
-XLock.font: -*-helvetica-medium-r-*-*-34-*-*-*-*-*-*
-XLock.planfont: -misc-fixed-medium-r-normal--20-*-*-*-*-*-*
+XLock.font: -*-helvetica-medium-r-*--34-*-*-*-*-*-*
+XLock.planfont: -*-helvetica-medium-r-*--24-*-*-*-*-*-*
 XLock.background: Black
 XLock.foreground: White
 XLock.username: Name:
