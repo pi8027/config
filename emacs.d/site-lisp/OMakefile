@@ -8,11 +8,11 @@ color-theme-6.6.0.tar.gz: color-theme-6.6.0.tar.gz-CHECKSUM
 	  'http://download.savannah.gnu.org/releases/color-theme/color-theme-6.6.0.tar.gz'
 	sha256sum -c color-theme-6.6.0.tar.gz-CHECKSUM
 
-agda-mode: Agda-2.3.2.tar.gz
-	tar xvf Agda-2.3.2.tar.gz Agda-2.3.2/src/data/emacs-mode/ \
-		--transform 's,^Agda-2.3.2/src/data/emacs-mode,agda-mode,'
+agda-mode: Agda-2.4.0.tar.gz
+	tar xvf Agda-2.4.0.tar.gz Agda-2.4.0/src/data/emacs-mode/ \
+		--transform 's,^Agda-2.4.0/src/data/emacs-mode,agda-mode,'
 
-Agda-2.3.2.tar.gz: Agda-2.3.2.tar.gz-CHECKSUM
-	wget -O Agda-2.3.2.tar.gz \
-		'http://hackage.haskell.org/packages/archive/Agda/2.3.2/Agda-2.3.2.tar.gz'
-	sha256sum -c Agda-2.3.2.tar.gz-CHECKSUM
+Agda-2.4.0.tar.gz: Agda-2.4.0.tar.gz-CHECKSUM
+	wget -O Agda-2.4.0.tar.gz \
+		'http://hackage.haskell.org/packages/archive/Agda/2.4.0/Agda-2.4.0.tar.gz'
+	sha256sum -c Agda-2.4.0.tar.gz-CHECKSUM
