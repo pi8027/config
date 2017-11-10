@@ -8,6 +8,7 @@ Xresources          .Xresources
 emacs.d             .emacs.d
 ghci                .ghci
 gitconfig           .gitconfig
+latexmkrc           .latexmkrc
 skk                 .skk
 tmux.conf           .tmux.conf
 vim                 .vim
