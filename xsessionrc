@@ -1,2 +1,4 @@
+#!/bin/zsh
 xmodmap .Xmodmap
+imwheel
 exec xmonad

@@ -8,6 +8,7 @@ Xresources          .Xresources
 emacs.d             .emacs.d
 ghci                .ghci
 gitconfig           .gitconfig
+imwheelrc           .imwheelrc
 latexmkrc           .latexmkrc
 skk                 .skk
 tmux.conf           .tmux.conf
@@ -15,7 +16,7 @@ vim                 .vim
 vimrc               .vimrc
 xmobarrc            .xmobarrc
 xmonad              .xmonad
-xsession            .xsession
+xsessionrc          .xsessionrc
 zsh.d               .zsh.d
 zshenv              .zshenv
 EOT
