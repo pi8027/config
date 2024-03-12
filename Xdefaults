@@ -23,18 +23,15 @@ urxvt.*.cursorColor2:   white
 !rxvt-unicode フォント設定
 !fc-list, xlsfonts 参照
 urxvt.*.font:\
-    -mplus-gothic-medium-r-normal--13-120-75-75-c-60-iso8859-1,\
-    -mplus-gothic-medium-r-normal--13-120-75-75-c-120-jisx0208.1990-0
+  xft:M PLUS 1 Code:pixelsize=20:antialias=true:hintint=true:minspace=true:style=regular
 urxvt.*.boldFont:\
-    -mplus-gothic-bold-r-normal--13-120-75-75-c-60-iso8859-1,\
-    -mplus-gothic-bold-r-normal--13-120-75-75-c-120-jisx0208.1990-0
+  xft:M PLUS 1 Code:pixelsize=20:antialias=true:hintint=true:minspace=true:style=semibold
 urxvt.*.italicFont:\
-    -mplus-gothic-medium-r-normal--13-120-75-75-c-60-iso8859-1,\
-    -mplus-gothic-medium-r-normal--13-120-75-75-c-120-jisx0208.1990-0
+  xft:M PLUS 1 Code:pixelsize=20:antialias=true:hintint=true:minspace=true:style=regular
 urxvt.*.boldItalicFont:\
-    -mplus-gothic-bold-r-normal--13-120-75-75-c-60-iso8859-1,\
-    -mplus-gothic-bold-r-normal--13-120-75-75-c-120-jisx0208.1990-0
+  xft:M PLUS 1 Code:pixelsize=20:antialias=true:hintint=true:minspace=true:style=semibold
 urxvt.*.lineSpace: 0
+urxvt.*.letterSpace: 0
 urxvt.*.scrollBar: False
 urxvt.*.saveLines: 0
 urxvt.*.inputMethod: none
@@ -43,20 +40,3 @@ urxvt.*.iso14755: False
 urxvt.*.iso14755_52: False
 
 Emacs.useXIM: false
-
-XLock.mode: blank
-XLock.description: off
-XLock.echokeys: on
-XLock.echokey: *
-XLock.font: -*-helvetica-medium-r-*--34-*-*-*-*-*-*
-XLock.planfont: -*-helvetica-medium-r-*--24-*-*-*-*-*-*
-XLock.background: Black
-XLock.foreground: White
-XLock.username: Name:
-XLock.password: Password:
-XLock.info:
-XLock.validate: Validating login...
-XLock.invalid: Invalid login.
-XLock.invalidCapsLock: Invalid login, Caps Lock on.
-XLock.attempt: failed attempt.
-XLock.attempts:  failed attempts.

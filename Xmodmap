@@ -1,16 +1,20 @@
 ! swap numbers for symbols
-keysym 1 = exclam 1
-keysym 2 = at 2
-keysym 3 = numbersign 3
-keysym 4 = dollar 4
-keysym 5 = percent 5
-keysym 6 = asciicircum 6
-keysym 7 = ampersand 7
-keysym 8 = asterisk 8
-keysym 9 = parenleft 9
-keysym 0 = parenright 0
+!keysym 1 = exclam 1
+!keysym 2 = at 2
+!keysym 3 = numbersign 3
+!keysym 4 = dollar 4
+!keysym 5 = percent 5
+!keysym 6 = asciicircum 6
+!keysym 7 = ampersand 7
+!keysym 8 = asterisk 8
+!keysym 9 = parenleft 9
+!keysym 0 = parenright 0
 
 ! CapsLock to Control
-remove Lock = Caps_Lock
-add Control = Caps_Lock
-keysym Caps_Lock = Control_L
+!remove Lock = Caps_Lock
+!add Control = Caps_Lock
+!keysym Caps_Lock = Control_L
+
+! SandS (with xcape)
+keycode 255=space
+keycode 65=Shift_L

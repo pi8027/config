@@ -11,9 +11,11 @@ gitconfig           .gitconfig
 imwheelrc           .imwheelrc
 latexmkrc           .latexmkrc
 skk                 .skk
+sway                .sway
 tmux.conf           .tmux.conf
 vim                 .vim
 vimrc               .vimrc
+xkb                 .xkb
 xmobarrc            .xmobarrc
 xmonad              .xmonad
 xsessionrc          .xsessionrc
