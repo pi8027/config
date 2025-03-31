@@ -1,6 +1,8 @@
 ;;;; language, encoding
 
-(set-language-environment 'Japanese)
+(package-initialize)
+
+(set-language-environment 'English)
 
 (prefer-coding-system 'utf-8)
 
@@ -9,16 +11,19 @@
 (defun add-load-paths (paths)
   (dolist (default-directory paths)
     (if (file-exists-p default-directory)
-	(normal-top-level-add-subdirs-to-load-path))))
+	(progn (add-to-list 'load-path default-directory)
+           (normal-top-level-add-subdirs-to-load-path)))))
 
 (add-load-paths
     '("~/.emacs.d/site-lisp"
+      "~/.emacs.d/lisp"
       "/usr/share/emacs/site-lisp"
       "/usr/local/share/emacs/site-lisp"
       "/opt/local/share/emacs/site-lisp"))
 
 ;;;; key binding
 
+; assign both C-h and BackSpace to BackSpace (backward-delete-char)
 (global-set-key "\C-h" 'backward-delete-char)
 (global-set-key "\177" 'backward-delete-char)
 
@@ -34,30 +39,54 @@
 ;;;; view
 
 (setq frame-title-format "GNU Emacs")
-
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 
-(global-linum-mode t)
-;; (if (eq window-system nil)
-;;   (setq linum-format "%d ")
-;;   (setq linum-format "%d"))
-
+(global-display-line-numbers-mode t)
+(blink-cursor-mode t)
 (show-paren-mode 1)
 
-(blink-cursor-mode t)
+(setq-default display-fill-column-indicator-column 80)
+(setq-default display-fill-column-indicator-character ?\ )
+; TODO: The stipple should be calculated from window-font-width (cf. indent-bars)
+(set-face-attribute 'fill-column-indicator nil :stipple '(16 1 "\x0\x10"))
 
-(if window-system
-	(set-scroll-bar-mode nil))
+(if window-system (set-scroll-bar-mode nil))
 (setq scroll-step 5)
+
+(setq inhibit-startup-message t)
+
+(setq mode-line-format
+      '(""
+        skk-modeline-input-mode
+        "%e "
+        mode-line-front-space
+        mode-line-mule-info
+        mode-line-client
+        mode-line-modified
+        mode-line-remote
+        mode-line-frame-identification
+        mode-line-buffer-identification
+        "   "
+        mode-line-position
+        (vc-mode vc-mode)
+        "  "
+        mode-line-modes
+        mode-line-misc-info
+        mode-line-end-spaces))
+
+;;;; clipborad
+
+(setq x-select-enable-clipboard t)
+(setq interprogram-paste-function 'x-selection-value)
 
 ;;;; color
 
-(defun color-theme-pi8027 ()
-  "pi8027's theme"
+(defun color-theme-kazuhiko ()
+  "theme"
   (interactive)
   (color-theme-install
-   '(color-theme-pi8027
+   '(color-theme-kazuhiko
      ((background-mode . dark)
       (background-color . "black")
       (foreground-color . "white")
@@ -75,49 +104,51 @@
 
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-pi8027)
+(color-theme-kazuhiko)
 
 ;;;; font
 
-(defun my-font-settings (scale)
-  (cond ((eq window-system 'x)
-	 (set-face-attribute 'default nil :family "Terminus" :height (floor (* scale 80)))
-	 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("M+ 2m" . "iso10646-1"))
-	 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("M+ 2m" . "iso10646-1"))
-	 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("M+ 2m" . "iso10646-1")))
-	((eq window-system 'ns)
-	 (set-face-attribute 'default nil :family "Monaco" :height (floor (* scale 100)))
-	 (set-fontset-font "fontset-default" 'katakana-jisx0201 '("Osaka" . "iso10646-1"))
-	 (set-fontset-font "fontset-default" 'japanese-jisx0208 '("Osaka" . "iso10646-1"))
-	 (set-fontset-font "fontset-default" 'japanese-jisx0212 '("Osaka" . "iso10646-1"))
-	 (setq face-font-rescale-alist
-	       '(("^-apple-hiragino.*" . 1.2)
-		 (".*osaka-bold.*" . 1.2)
-		 (".*osaka-medium.*" . 1.2)
-		 (".*courier-bold-.*-mac-roman" . 1.0)
-		 (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
-		 (".*monaco-bold-.*-mac-roman" . 0.9)
-		 ("-cdac$" . 1.3))))))
-
-(my-font-settings 1)
+(cond
+  ((eq window-system 'x)
+   (set-face-attribute 'default nil :family "Inconsolata" :height 150)
+   (set-fontset-font "fontset-default" 'japanese-jisx0208 (font-spec :family "M PLUS 1 Code"))
+   (set-fontset-font "fontset-default" 'japanese-jisx0212 (font-spec :family "M PLUS 1 Code"))
+   (setq face-font-rescale-alist
+     '((".*inconsolata.*" . 1)
+       (".*M PLUS.*" . 0.89))))
+  ((eq window-system 'ns)
+   (set-face-attribute 'default nil :family "Monaco" :height 150)
+   (set-fontset-font "fontset-default" 'japanese-jisx0208 (font-spec :family "Osaka"))
+   (set-fontset-font "fontset-default" 'japanese-jisx0212 (font-spec :family "Osaka"))
+   (setq face-font-rescale-alist
+     '(("^-apple-hiragino.*" . 1.2)
+       (".*osaka-bold.*" . 1.2)
+       (".*osaka-medium.*" . 1.2)
+       (".*courier-bold-.*-mac-roman" . 1.0)
+       (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
+       (".*monaco-bold-.*-mac-roman" . 0.9)
+       ("-cdac$" . 1.3)))))
 
 ;;;; auto-complete.el
 
-(require 'auto-complete)
-(global-auto-complete-mode t)
-
-(setq ac-auto-show-menu 0)
-(setq ac-quick-help-delay 0)
-(setq ac-auto-start 0)
+;(require 'auto-complete)
+;(require 'auto-complete-config)
+;(ac-config-default)
+;;(global-auto-complete-mode t)
+;(setq auto-complete-keys 'ac-keys-backquote-backslash)
+;
+;(setq ac-auto-show-menu 0)
+;(setq ac-quick-help-delay 0)
+;(setq ac-auto-start 0)
 
 ;;;; ddskk
 
 (autoload 'skk-mode "skk" nil t)
 (global-set-key "\C-x\C-j" 'skk-mode)
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
-(setq skk-server-host "localhost")
-(setq skk-server-port 1178)
-;(setq skk-large-jisyo "~/.skk/SKK-JISYO.L")
+;(setq skk-server-host "localhost")
+;(setq skk-server-port 1178)
+(setq skk-large-jisyo "~/.skk/SKK-JISYO.L")
 
 (add-hook 'isearch-mode-hook
           #'(lambda ()
@@ -138,55 +169,52 @@
 (setq YaTeX-kanji-code 4)
 (setq YaTeX-fill-column 100)
 
+(add-hook 'yatex-mode-hook '(lambda ()
+			      (electric-indent-local-mode nil)))
+
 ;;;; Gauche
 
 (autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
 (setq scheme-program-name "gosh -i")
 
-;;;; Haskell (ghc-mod)
+;;;; OCaml (Tuareg, OCP, Merlin)
 
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+(opam-setup-tuareg)
+(opam-setup-ocp-indent)
+(opam-setup-merlin)
 
+;;;; Coq Proof General
 
-;;;; OCaml (TypeRex)
+(require 'proof-site "~/.emacs.d/lisp/PG/generic/proof-site")
 
-(autoload 'typerex-mode "typerex" "Major mode for editing OCaml code" t)
-(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . typerex-mode))
-(add-to-list 'interpreter-mode-alist '("ocamlrun" . typerex-mode))
-(add-to-list 'interpreter-mode-alist '("ocaml" . typerex-mode))
-
-(setq ocp-server-command "/usr/local/bin/ocp-wizard")
-
-(setq ocp-theme "tuareg")
-
-(setq typerex-let-always-indent nil)
-(setq typerex-with-indent 0)
-(setq typerex-function-indent 0)
-(setq typerex-fun-indent 0)
-(setq typerex-if-then-else-indent 0)
-
-(setq ocp-auto-complete t)
-
-;;;; agda-mode
-
-(require 'agda2)
-
-(setq agda2-include-dirs '("" "/home/pi8027/lib/agda/"))
-
-(add-hook 'agda2-mode-hook
-    (function (lambda () (add-to-list 'agda2-ghci-options "+RTS -M2G -K1G -RTS"))))
-
-;;;; proof general
-
-(autoload 'coq-mode "proof-site" "Coq proof assistant on Emacs" t)
-(setq coq-load-path '("."))
+(setq proof-splash-enable nil)
 (setq proof-three-window-enable t)
+(setq proof-three-window-mode-policy 'smart)
+(setq split-width-threshold 180)
+(setq coq-accept-proof-using-suggestion 'never)
+
 (add-to-list 'auto-mode-alist '("\\.v" . coq-mode))
+(load-file "~/.emacs.d/pg-ssr.el")
+
+(setq coq-prog-args nil)
+(setq coq-load-path-include-current t)
+
+(add-hook 'coq-mode-hook '(lambda () (electric-indent-local-mode nil)))
+(add-hook 'coq-mode-hook 'display-fill-column-indicator-mode)
+
+(setq coq-indent-proofstart 0)
+(setq coq-indent-modulestart 0)
 
 ;;;; gdb
 
 (setq gdb-many-windows t)
 (setq gdb-use-separate-io-buffer t)
+
+;;;; magit
+
+(autoload 'magit "magit" nil t)
 
 ;;;; sdic-mode
 
@@ -204,21 +232,16 @@
 
 ;;;; ielm
 
-(defun ielm-auto-complete ()
-  "Enables `auto-complete' support in \\[ielm]."
-  (setq ac-sources '(ac-source-functions
-                     ac-source-variables
-                     ac-source-features
-                     ac-source-symbols
-                     ac-source-words-in-same-mode-buffers))
-  (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
-  (auto-complete-mode 1))
-(add-hook 'ielm-mode-hook 'ielm-auto-complete)
-
-;;;; w3m
-
-(autoload 'w3m "w3m" "Interface for w3m on Emacs" t)
-(setq w3m-home-page "http://google.com/")
+;(defun ielm-auto-complete ()
+;  "Enables `auto-complete' support in \\[ielm]."
+;  (setq ac-sources '(ac-source-functions
+;                     ac-source-variables
+;                     ac-source-features
+;                     ac-source-symbols
+;                     ac-source-words-in-same-mode-buffers))
+;  (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
+;  (auto-complete-mode 1))
+;(add-hook 'ielm-mode-hook 'ielm-auto-complete)
 
 ;;;; local configuration
 
