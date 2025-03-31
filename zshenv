@@ -1,5 +1,3 @@
-if [[ -z $ZDOTDIR ]]; then
-    export ZDOTDIR=~/.zsh.d
-fi
+export ZDOTDIR=~/.zsh.d
 
 [[ -f $ZDOTDIR/.zshenv ]] && . $ZDOTDIR/.zshenv

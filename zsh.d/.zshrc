@@ -21,8 +21,6 @@ setopt extended_glob
 
 # variable types
 
-typeset -U path manpath cdpath fpath
-typeset -T LS_COLORS ls_colors
 export LANG PATH MANPATH LS_COLORS
 
 # local configuration
@@ -33,7 +31,7 @@ export LANG PATH MANPATH LS_COLORS
 
 cdpath=(~ $cdpath)
 
-LANG=ja_JP.UTF-8
+LANG=en_US.UTF-8
 ls_colors=(no=00 fi=00 di=04\;34 ln=01\;36 pi=40\;33
     so=40\;33 bd=40\;33 cd=40\;33 ex=01\;31 or=04\;36)
 
@@ -45,8 +43,6 @@ fi
 if which vim > /dev/null ; then
     export EDITOR=vim
 fi
-
-coins=coins.tsukuba.ac.jp
 
 # prompt
 
@@ -104,7 +100,6 @@ LISTMAX=0
 alias history-all='history -E 1 | less'
 alias less='less -r -M'
 alias gosh='rlwrap gosh'
-alias racket='rlwrap racket'
 alias ocaml='rlwrap ocaml'
 alias coqtop='rlwrap coqtop'
 alias gs='rlwrap gs'
@@ -120,16 +115,6 @@ darwin*)
 esac
 alias ll='ls -l'
 alias la='ls -la'
-
-_emacs(){
-    if [[ -f config.el ]]; then
-        \emacs -l config.el $@
-    else
-        \emacs $@
-    fi
-}
-
-alias emacs=_emacs
 
 # directory stack
 
@@ -196,29 +181,11 @@ if [[ -n $TMUX ]] ; then
         tmux save-buffer $@ - | clipboardin
     }
 
-    tmux-editbuf(){
-        local buffer=$1
-        local file=`tempfile`
-        if tmux save-buffer -b "${buffer:-0}" $file ; then
-            buffer=${buffer:-0}
-        elif [[ -n $buffer ]] ; then
-            return 1
-        else
-            sleep 0.5
-        fi
-        $EDITOR $file
-        if [[ $(wc -c < $file) -eq 0 ]] ; then
-            [[ -n $buffer ]] && tmux delete-buffer -b $buffer
-        else
-            tmux load-buffer ${buffer:+-b $buffer} $file
-        fi
-        rm $file
-    }
-
     # other
 
     . $ZDOTDIR/tmux-cdd.zsh
     . $ZDOTDIR/tmux-np.zsh
+    . $ZDOTDIR/tmux-editbuf.zsh
 fi
 
 # vcs_info
