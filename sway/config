@@ -58,8 +58,7 @@ input type:touchpad {
 }
 
 input type:keyboard {
-    xkb_layout "us-dvorak-numsym"
-    xkb_options "caps:ctrl_modifier"
+    xkb_file "~/.xkb/config.xkb"
 }
 
 focus_follows_mouse no
@@ -228,6 +227,9 @@ bar {
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+
+    # Adding some gap for the rounded corners of the display of Framework Laptop
+    gaps 0 20
 
     colors {
         statusline #ffffff

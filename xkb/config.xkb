@@ -1,0 +1,37 @@
+xkb_keymap {
+  xkb_keycodes {
+    include "evdev+aliases(qwerty)"
+  };
+  xkb_types {
+    include "complete"
+  };
+  xkb_compat {
+    include "complete"
+  };
+  xkb_symbols {
+    // The keys that are common to all standard layouts
+    // See: /usr/share/X11/xkb/symbols/pc
+    include "pc"
+    // Change the CapsLock key to Control
+    // See: /usr/share/X11/xkb/symbols/capslock
+    include "capslock(ctrl_modifier)"
+    // Dvorak international without dead keys
+    // See: /usr/share/X11/xkb/symbols/us
+    include "us(dvorak-alt-intl)"
+    // Swap the numbers and symbols
+    key <AE01> { [      exclam,       1 ] };
+    key <AE02> { [          at,       2 ] };
+    key <AE03> { [  numbersign,       3 ] };
+    key <AE04> { [      dollar,       4 ] };
+    key <AE05> { [     percent,       5 ] };
+    key <AE06> { [ asciicircum,       6 ] };
+    key <AE07> { [   ampersand,       7 ] };
+    key <AE08> { [    asterisk,       8 ] };
+    key <AE09> { [   parenleft,       9 ] };
+    key <AE10> { [  parenright,       0 ] };
+    include "inet(evdev)"
+  };
+  xkb_geometry {
+    include "pc(pc105)"
+  };
+};
